@@ -110,23 +110,11 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-		<!-- 日志文件管理包 -->
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-		</dependency>
 		<!-- fastjson -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.28</version>
-		</dependency>
-		<!-- 映入JSON -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.8.4</version>
 		</dependency>
 		<!-- httpclient -->
 		<dependency>
@@ -154,11 +142,23 @@
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>1.9</version>
+			<version>1.10</version>
+		</dependency>
+		<!-- ehcache -->
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>2.10.3</version>
+		</dependency>
+		<!-- dom4j -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>Electronic-Service</finalName>
+		<finalName>chaoyueshidai</finalName>
 		<resources>
 			<resource>
 				<directory>${basedir}/src/main/java</directory>
