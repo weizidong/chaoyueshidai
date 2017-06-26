@@ -28,7 +28,7 @@ public class ConfigController {
 	}
 
 	// 获取我的配置
-	@RequestMapping(value = "/mine", method = RequestMethod.GET)
+	@RequestMapping(value = "/mine")
 	public @ResponseBody Config mine(HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		if (user != null && user.getId() != null) {

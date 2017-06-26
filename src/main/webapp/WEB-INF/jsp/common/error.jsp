@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
-<%@include file="/common/head.jsp"%>
+<%@include file="./head.jsp"%>
 <body>
-	<%@include file="/common/header.jsp"%>
+	<%@include file="./header.jsp"%>
 	500服务器出错了。。。
-	<%@include file="/common/footer.jsp"%>
+	<%@include file="./footer.jsp"%>
 </body>
 <script type="text/javascript">
 	setTitle('500');
