@@ -1,36 +1,26 @@
 package xin.chaoyueshidai.module.config;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import com.alibaba.fastjson.JSON;
 
 // 配置
-@SuppressWarnings("serial")
-public class Config implements Serializable {
-	// 字段
-	private String filed;
-	// 值
-	private String value;
-	// 上一次的值
+public class Config {
+	// 用户id
+	private Integer userid;
+	// 最后一次配置
 	private String lastValue;
-	// 修改时间
+	// 时间
 	private Date time;
+	// 配置
+	private String value;
 
-	public String getFiled() {
-		return filed;
+	public Integer getUserid() {
+		return userid;
 	}
 
-	public void setFiled(String filed) {
-		this.filed = filed == null ? null : filed.trim();
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value == null ? null : value.trim();
+	public void setUserid(Integer userid) {
+		this.userid = userid;
 	}
 
 	public String getLastValue() {
@@ -47,6 +37,14 @@ public class Config implements Serializable {
 
 	public void setTime(Date time) {
 		this.time = time;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value == null ? null : value.trim();
 	}
 
 	@Override

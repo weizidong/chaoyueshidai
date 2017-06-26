@@ -2,10 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="xin.chaoyueshidai.module.config.ConfigMapper">
 	<resultMap id="BaseResultMap" type="xin.chaoyueshidai.module.config.Config">
-		<id column="filed" property="filed" jdbcType="VARCHAR" />
-		<result column="value" property="value" jdbcType="VARCHAR" />
-		<result column="last_value" property="lastValue" jdbcType="VARCHAR" />
+		<id column="userid" property="userid" jdbcType="INTEGER" />
 		<result column="time" property="time" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="xin.chaoyueshidai.module.config.Config"
+		extends="BaseResultMap">
+		<result column="value" property="value" jdbcType="LONGVARCHAR" />
+		<result column="last_value" property="lastValue" jdbcType="LONGVARCHAR" />
 	</resultMap>
 	<sql id="Example_Where_Clause">
 		<where>
@@ -71,8 +74,28 @@
 		</where>
 	</sql>
 	<sql id="Base_Column_List">
-		filed, value, last_value, time
+		userid, time
 	</sql>
+	<sql id="Blob_Column_List">
+		value, last_value
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="xin.chaoyueshidai.module.config.ConfigExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from config
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
 	<select id="selectByExample" resultMap="BaseResultMap"
 		parameterType="xin.chaoyueshidai.module.config.ConfigExample">
 		select
@@ -88,16 +111,18 @@
 			order by ${orderByClause}
 		</if>
 	</select>
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
-		parameterType="java.lang.String">
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
 		select
 		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
 		from config
-		where filed = #{filed,jdbcType=VARCHAR}
+		where userid = #{userid,jdbcType=INTEGER}
 	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from config
-		where filed = #{filed,jdbcType=VARCHAR}
+		where userid = #{userid,jdbcType=INTEGER}
 	</delete>
 	<delete id="deleteByExample" parameterType="xin.chaoyueshidai.module.config.ConfigExample">
 		delete from config
@@ -106,20 +131,17 @@
 		</if>
 	</delete>
 	<insert id="insert" parameterType="xin.chaoyueshidai.module.config.Config">
-		insert into config (filed, value, last_value,
-		time)
-		values (#{filed,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR},
-		#{lastValue,jdbcType=VARCHAR},
-		#{time,jdbcType=TIMESTAMP})
+		insert into config (userid, last_value, time,
+		value)
+		values (#{userid,jdbcType=INTEGER}, #{lastValue,jdbcType=VARCHAR},
+		#{time,jdbcType=TIMESTAMP},
+		#{value,jdbcType=LONGVARCHAR})
 	</insert>
 	<insert id="insertSelective" parameterType="xin.chaoyueshidai.module.config.Config">
 		insert into config
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="filed != null">
-				filed,
-			</if>
-			<if test="value != null">
-				value,
+			<if test="userid != null">
+				userid,
 			</if>
 			<if test="lastValue != null">
 				last_value,
@@ -127,19 +149,22 @@
 			<if test="time != null">
 				time,
 			</if>
+			<if test="value != null">
+				value,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="filed != null">
-				#{filed,jdbcType=VARCHAR},
-			</if>
-			<if test="value != null">
-				#{value,jdbcType=VARCHAR},
+			<if test="userid != null">
+				#{userid,jdbcType=INTEGER},
 			</if>
 			<if test="lastValue != null">
 				#{lastValue,jdbcType=VARCHAR},
 			</if>
 			<if test="time != null">
 				#{time,jdbcType=TIMESTAMP},
+			</if>
+			<if test="value != null">
+				#{value,jdbcType=LONGVARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -153,11 +178,8 @@
 	<update id="updateByExampleSelective" parameterType="map">
 		update config
 		<set>
-			<if test="record.filed != null">
-				filed = #{record.filed,jdbcType=VARCHAR},
-			</if>
-			<if test="record.value != null">
-				value = #{record.value,jdbcType=VARCHAR},
+			<if test="record.userid != null">
+				userid = #{record.userid,jdbcType=INTEGER},
 			</if>
 			<if test="record.lastValue != null">
 				last_value = #{record.lastValue,jdbcType=VARCHAR},
@@ -165,15 +187,27 @@
 			<if test="record.time != null">
 				time = #{record.time,jdbcType=TIMESTAMP},
 			</if>
+			<if test="record.value != null">
+				value = #{record.value,jdbcType=LONGVARCHAR},
+			</if>
 		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update config
+		set userid = #{record.userid,jdbcType=INTEGER},
+		last_value = #{record.lastValue,jdbcType=VARCHAR},
+		time = #{record.time,jdbcType=TIMESTAMP},
+		value = #{record.value,jdbcType=LONGVARCHAR}
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
 		</if>
 	</update>
 	<update id="updateByExample" parameterType="map">
 		update config
-		set filed = #{record.filed,jdbcType=VARCHAR},
-		value = #{record.value,jdbcType=VARCHAR},
+		set userid = #{record.userid,jdbcType=INTEGER},
 		last_value = #{record.lastValue,jdbcType=VARCHAR},
 		time = #{record.time,jdbcType=TIMESTAMP}
 		<if test="_parameter != null">
@@ -183,23 +217,29 @@
 	<update id="updateByPrimaryKeySelective" parameterType="xin.chaoyueshidai.module.config.Config">
 		update config
 		<set>
-			<if test="value != null">
-				value = #{value,jdbcType=VARCHAR},
-			</if>
 			<if test="lastValue != null">
 				last_value = #{lastValue,jdbcType=VARCHAR},
 			</if>
 			<if test="time != null">
 				time = #{time,jdbcType=TIMESTAMP},
 			</if>
+			<if test="value != null">
+				value = #{value,jdbcType=LONGVARCHAR},
+			</if>
 		</set>
-		where filed = #{filed,jdbcType=VARCHAR}
+		where userid = #{userid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="xin.chaoyueshidai.module.config.Config">
+		update config
+		set last_value = #{lastValue,jdbcType=VARCHAR},
+		time = #{time,jdbcType=TIMESTAMP},
+		value = #{value,jdbcType=LONGVARCHAR}
+		where userid = #{userid,jdbcType=INTEGER}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="xin.chaoyueshidai.module.config.Config">
 		update config
-		set value = #{value,jdbcType=VARCHAR},
-		last_value = #{lastValue,jdbcType=VARCHAR},
+		set last_value = #{lastValue,jdbcType=VARCHAR},
 		time = #{time,jdbcType=TIMESTAMP}
-		where filed = #{filed,jdbcType=VARCHAR}
+		where userid = #{userid,jdbcType=INTEGER}
 	</update>
 </mapper>
