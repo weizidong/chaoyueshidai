@@ -235,6 +235,76 @@ public class ExampleExample {
             return (Criteria) this;
         }
 
+        public Criteria andLegendIsNull() {
+            addCriterion("legend is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegendIsNotNull() {
+            addCriterion("legend is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegendEqualTo(String value) {
+            addCriterion("legend =", value, "legend");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegendNotEqualTo(String value) {
+            addCriterion("legend <>", value, "legend");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegendGreaterThan(String value) {
+            addCriterion("legend >", value, "legend");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegendGreaterThanOrEqualTo(String value) {
+            addCriterion("legend >=", value, "legend");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegendLessThan(String value) {
+            addCriterion("legend <", value, "legend");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegendLessThanOrEqualTo(String value) {
+            addCriterion("legend <=", value, "legend");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegendLike(String value) {
+            addCriterion("legend like", value, "legend");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegendNotLike(String value) {
+            addCriterion("legend not like", value, "legend");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegendIn(List<String> values) {
+            addCriterion("legend in", values, "legend");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegendNotIn(List<String> values) {
+            addCriterion("legend not in", values, "legend");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegendBetween(String value1, String value2) {
+            addCriterion("legend between", value1, value2, "legend");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegendNotBetween(String value1, String value2) {
+            addCriterion("legend not between", value1, value2, "legend");
+            return (Criteria) this;
+        }
+
         public Criteria andUrlIsNull() {
             addCriterion("url is null");
             return (Criteria) this;

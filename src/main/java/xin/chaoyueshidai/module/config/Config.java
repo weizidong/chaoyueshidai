@@ -3,12 +3,14 @@ package xin.chaoyueshidai.module.config;
 import java.util.Date;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.annotation.JSONField;
 
 // 配置
 public class Config {
 	// 用户id
 	private Integer userid;
 	// 最后一次配置
+	@JSONField(serialize = false)
 	private String lastValue;
 	// 时间
 	private Date time;
