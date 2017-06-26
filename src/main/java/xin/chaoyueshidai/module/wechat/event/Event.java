@@ -1,10 +1,18 @@
 package xin.chaoyueshidai.module.wechat.event;
 
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import xin.chaoyueshidai.enums.Subscribe;
+import xin.chaoyueshidai.module.user.User;
+import xin.chaoyueshidai.module.user.UserService;
 import xin.chaoyueshidai.module.wechat.base.MsgType;
 import xin.chaoyueshidai.module.wechat.base.XmlResp;
+import xin.chaoyueshidai.module.wechat.user.FwUserApi;
 import xin.chaoyueshidai.param.WechatMsg;
+import xin.chaoyueshidai.utils.ThreadPoolUtils;
 
 /**
  * 微信事件消息处理
@@ -14,6 +22,8 @@ import xin.chaoyueshidai.param.WechatMsg;
  */
 @Component
 public class Event {
+	@Autowired
+	private UserService userService;
 
 	/**
 	 * 处理事件
@@ -69,13 +79,29 @@ public class Event {
 
 	// 取消关注事件
 	private String unsubscribe(WechatMsg msg) {
-		// TODO 取消关注事件
+		ThreadPoolUtils.execute(() -> {
+			User u = userService.getByOpenId(msg.getFromUserName());
+			u.setSubscribe(Subscribe.未关注);
+			userService.update(u);
+		});
 		return XmlResp.SUCCESS;
 	}
 
 	// 关注事件
 	private String subscribe(WechatMsg msg) {
-		// TODO 关注事件
+		ThreadPoolUtils.execute(() -> {
+			User u = userService.getByOpenId(msg.getFromUserName());
+			if (u == null) {
+				u = FwUserApi.get(msg.getFromUserName());
+				if (u != null) {
+					userService.save(u);
+				}
+			} else {
+				u.setSubscribe(Subscribe.已关注);
+				u.setSubscribeTime(new Date());
+				userService.update(u);
+			}
+		});
 		return XmlResp.SUCCESS;
 	}
 }

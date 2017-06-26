@@ -1,5 +1,7 @@
 package xin.chaoyueshidai.module.user;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -48,5 +50,26 @@ public class UserService {
 	public void changeType(Integer id, Integer type) {
 		// TODO Auto-generated method stub
 
+	}
+
+	// 根据openId查找
+	public User getByOpenId(String openId) {
+		UserExample e = new UserExample();
+		e.createCriteria().andOpenidEqualTo(openId);
+		List<User> list = mapper.selectByExample(e);
+		if (list != null && list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
+	}
+
+	// 保存
+	public void save(User u) {
+		mapper.insertSelective(u);
+	}
+
+	// 更新
+	public void update(User u) {
+		mapper.updateByPrimaryKeySelective(u);
 	}
 }

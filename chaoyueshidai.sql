@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-06-26 14:49:52
+Date: 2017-06-26 17:05:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,7 +32,7 @@ CREATE TABLE `config` (
 -- ----------------------------
 DROP TABLE IF EXISTS `example`;
 CREATE TABLE `example` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `topic` varchar(50) DEFAULT NULL,
   `legend` longtext,
   `url` varchar(255) DEFAULT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `example` (
 -- ----------------------------
 DROP TABLE IF EXISTS `note`;
 CREATE TABLE `note` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) DEFAULT NULL,
   `content` longtext,
   `created` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -58,7 +58,7 @@ CREATE TABLE `note` (
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `subscribe` int(1) DEFAULT '0',
   `openid` varchar(34) DEFAULT NULL,
   `nickname` varchar(100) DEFAULT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE `user` (
   `groupid` int(2) DEFAULT '0',
   `username` varchar(100) DEFAULT NULL,
   `pwd` varchar(34) DEFAULT NULL,
-  `type` int(2) DEFAULT '0',
+  `type` int(1) DEFAULT '0',
   `login_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `created` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `tel` varchar(20) DEFAULT NULL,

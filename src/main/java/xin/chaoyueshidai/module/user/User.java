@@ -1,13 +1,15 @@
 package xin.chaoyueshidai.module.user;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import com.alibaba.fastjson.JSON;
 
+import xin.chaoyueshidai.enums.Subscribe;
+import xin.chaoyueshidai.module.wechat.base.BaseResp;
+
 // 用户
 @SuppressWarnings("serial")
-public class User implements Serializable {
+public class User extends BaseResp {
 	// id
 	private Integer id;
 	// 用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。
@@ -63,6 +65,10 @@ public class User implements Serializable {
 
 	public void setSubscribe(Integer subscribe) {
 		this.subscribe = subscribe;
+	}
+
+	public void setSubscribe(Subscribe subscribe) {
+		this.subscribe = subscribe.getValue();
 	}
 
 	public String getOpenid() {
