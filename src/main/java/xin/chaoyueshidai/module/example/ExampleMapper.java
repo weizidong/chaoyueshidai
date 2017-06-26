@@ -1,0 +1,37 @@
+package xin.chaoyueshidai.module.example;
+
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+import xin.chaoyueshidai.module.example.Example;
+import xin.chaoyueshidai.module.example.ExampleExample;
+
+public interface ExampleMapper {
+    int countByExample(ExampleExample example);
+
+    int deleteByExample(ExampleExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(Example record);
+
+    int insertSelective(Example record);
+
+    List<Example> selectByExampleWithBLOBs(ExampleExample example);
+
+    List<Example> selectByExample(ExampleExample example);
+
+    Example selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") Example record, @Param("example") ExampleExample example);
+
+    int updateByExampleWithBLOBs(@Param("record") Example record, @Param("example") ExampleExample example);
+
+    int updateByExample(@Param("record") Example record, @Param("example") ExampleExample example);
+
+    int updateByPrimaryKeySelective(Example record);
+
+    int updateByPrimaryKeyWithBLOBs(Example record);
+
+    int updateByPrimaryKey(Example record);
+}
