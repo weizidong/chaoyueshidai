@@ -32,6 +32,7 @@ public class ExceptionHandler extends SimpleMappingExceptionResolver {
 		try {
 			log.debug("参数：" + StreamUtils.copyToString(request.getInputStream(), Charset.defaultCharset()));
 			log.error("异常：" + ex);
+			ex.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

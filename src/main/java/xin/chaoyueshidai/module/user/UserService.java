@@ -63,6 +63,17 @@ public class UserService {
 		return null;
 	}
 
+	// 根据用户名查找
+	public User getByUsername(String username) {
+		UserExample e = new UserExample();
+		e.createCriteria().andUsernameEqualTo(username);
+		List<User> list = mapper.selectByExample(e);
+		if (list != null && list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
+	}
+
 	// 保存
 	public void save(User u) {
 		mapper.insertSelective(u);

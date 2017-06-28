@@ -25,7 +25,11 @@ public class ConfigService {
 	 */
 	public void save(Integer userid, String value) {
 		Config c = mapper.selectByPrimaryKey(userid);
-		c.setLastValue(c.getValue());
+		if (c == null) {
+			c = new Config();
+			c.setUserid(userid);
+			c.setLastValue(c.getValue());
+		}
 		c.setValue(value);
 		c.setTime(new Date());
 		mapper.updateByPrimaryKeySelective(c);

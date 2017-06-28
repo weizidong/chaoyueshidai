@@ -2,9 +2,9 @@ package xin.chaoyueshidai.module.config;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.BeanParam;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,11 +20,14 @@ public class ConfigController {
 
 	// 保存配置
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public void save(@BeanParam Config c, HttpSession session) {
+	@ResponseBody
+	public Config save(@RequestBody Config c, HttpSession session) {
+		System.out.println(c);
 		User user = (User) session.getAttribute("user");
 		if (user != null && user.getId() != null) {
 			configService.save(user.getId(), c.getValue());
 		}
+		return c;
 	}
 
 	// 获取我的配置

