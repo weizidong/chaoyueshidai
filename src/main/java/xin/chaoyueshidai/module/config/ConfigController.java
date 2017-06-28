@@ -21,18 +21,17 @@ public class ConfigController {
 	// 保存配置
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
-	public Config save(@RequestBody Config c, HttpSession session) {
-		System.out.println(c);
+	public void save(@RequestBody Config c, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		if (user != null && user.getId() != null) {
 			configService.save(user.getId(), c.getValue());
 		}
-		return c;
 	}
 
 	// 获取我的配置
 	@RequestMapping(value = "/mine")
-	public @ResponseBody Config mine(HttpSession session) {
+	@ResponseBody
+	public Config mine(HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		if (user != null && user.getId() != null) {
 			return configService.get(user.getId());

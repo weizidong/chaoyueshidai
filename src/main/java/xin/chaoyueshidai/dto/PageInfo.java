@@ -12,10 +12,28 @@ import com.alibaba.fastjson.JSON;
  */
 @SuppressWarnings("serial")
 public class PageInfo implements Serializable {
-	private Integer all;
-	private Integer page;
-	private Integer pageSize;
-	private Object list;
+	private Integer all;// 总记录
+	private Integer page;// 当前页数
+	private Integer pageSize;// 每页记录数
+	private Integer start;// 开始记录
+	private Integer end;// 结束记录
+	private Object list;// 数据
+
+	public Integer getStart() {
+		return start;
+	}
+
+	public void setStart(Integer start) {
+		this.start = start;
+	}
+
+	public Integer getEnd() {
+		return end;
+	}
+
+	public void setEnd(Integer end) {
+		this.end = end;
+	}
 
 	public Integer getAll() {
 		return all;
@@ -23,6 +41,11 @@ public class PageInfo implements Serializable {
 
 	public void setAll(Integer all) {
 		this.all = all;
+		if (Math.ceil(all * 1.0 / this.pageSize) < this.page) {
+			this.page = (int) Math.ceil(all / this.pageSize);
+		}
+		this.start = this.page * this.pageSize;
+		this.end = (this.page + 1) * this.pageSize;
 	}
 
 	public Integer getPage() {
@@ -30,7 +53,7 @@ public class PageInfo implements Serializable {
 	}
 
 	public void setPage(Integer page) {
-		this.page = page;
+		this.page = page != null && page > 0 ? page : 1;
 	}
 
 	public Integer getPageSize() {

@@ -28,11 +28,15 @@ public class ConfigService {
 		if (c == null) {
 			c = new Config();
 			c.setUserid(userid);
+			c.setValue(value);
+			c.setTime(new Date());
+			mapper.insertSelective(c);
+		} else {
 			c.setLastValue(c.getValue());
+			c.setValue(value);
+			c.setTime(new Date());
+			mapper.updateByPrimaryKeySelective(c);
 		}
-		c.setValue(value);
-		c.setTime(new Date());
-		mapper.updateByPrimaryKeySelective(c);
 	}
 
 }

@@ -1,7 +1,5 @@
 package xin.chaoyueshidai.interceptor;
 
-import java.nio.charset.Charset;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -9,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StreamUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -45,7 +42,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 		String url = request.getServletPath();
 		String query = request.getQueryString();
 		log.debug("请求：" + url + "?" + query);
-		log.debug("参数：" + StreamUtils.copyToString(request.getInputStream(), Charset.defaultCharset()));
 		String debug = request.getParameter("debug");
 		HttpSession session = request.getSession();
 		session.setAttribute("start", System.currentTimeMillis());
