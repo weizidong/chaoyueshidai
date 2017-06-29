@@ -36,8 +36,7 @@ public class UserService {
 
 	// 根据Id获取
 	public User getById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return mapper.selectByPrimaryKey(id);
 	}
 
 	// 重置密码

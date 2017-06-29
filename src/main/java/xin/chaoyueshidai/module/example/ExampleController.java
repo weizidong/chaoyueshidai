@@ -24,11 +24,42 @@ public class ExampleController {
 	// 获取列表
 	@RequestMapping(value = "/find/{type}", method = RequestMethod.POST)
 	@ResponseBody
-	public PageInfo save(@RequestBody PageParam param, @PathVariable String type, HttpSession session) {
+	public PageInfo find(@RequestBody PageParam param, @PathVariable String type, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		if (user != null && user.getId() != null) {
 			return exampleService.find(user.getId(), type, param);
 		}
 		return null;
+	}
+
+	// 根据id获取
+	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public Example get(@PathVariable Integer id, HttpSession session) {
+		return exampleService.get(id);
+	}
+
+	// 根据id删除
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public void delete(@PathVariable Integer id, HttpSession session) {
+		exampleService.delete(id);
+	}
+
+	// 添加
+	@RequestMapping(value = "/add/{type}", method = RequestMethod.POST)
+	@ResponseBody
+	public void get(@RequestBody Example e, @PathVariable String type, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if (user != null && user.getId() != null) {
+			exampleService.save(user.getId(), type, e);
+		}
+	}
+
+	// 修改
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	@ResponseBody
+	public void update(@RequestBody Example e, HttpSession session) {
+		exampleService.update(e);
 	}
 }

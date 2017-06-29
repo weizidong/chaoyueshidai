@@ -1,5 +1,6 @@
 package xin.chaoyueshidai.module.example;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -39,6 +40,37 @@ public class ExampleService {
 		List<Example> list = mapper.selectByExample(e);
 		info.setList(list);
 		return info;
+	}
+
+	/**
+	 * 根据Id获取
+	 */
+	public Example get(Integer id) {
+		return mapper.selectByPrimaryKey(id);
+	}
+
+	/**
+	 * 保存
+	 */
+	public void save(Integer userid, String type, Example e) {
+		e.setUserid(userid);
+		e.setType(type);
+		e.setCreated(new Date());
+		mapper.insertSelective(e);
+	}
+
+	/**
+	 * 删除
+	 */
+	public void delete(Integer id) {
+		mapper.deleteByPrimaryKey(id);
+	}
+
+	/**
+	 * 修改
+	 */
+	public void update(Example e) {
+		mapper.updateByPrimaryKeyWithBLOBs(e);
 	}
 
 }

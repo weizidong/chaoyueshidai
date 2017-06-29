@@ -44,8 +44,8 @@ public class PageInfo implements Serializable {
 		if (Math.ceil(all * 1.0 / this.pageSize) < this.page) {
 			this.page = (int) Math.ceil(all / this.pageSize);
 		}
-		this.start = this.page * this.pageSize;
-		this.end = (this.page + 1) * this.pageSize;
+		this.start = this.page == 0 ? 0 : (this.page - 1) * this.pageSize;
+		this.end = this.page == 0 ? this.pageSize : this.page * this.pageSize;
 	}
 
 	public Integer getPage() {

@@ -21,9 +21,21 @@ public class UserController {
 	@Resource
 	private UserService userService;
 
+	// 获取当前登录
+	@RequestMapping("/mine")
+	@ResponseBody
+	public User mine(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		user = userService.getById(user.getId());
+		user.setPwd(null);
+		session.setAttribute("user", user);
+		return user;
+	}
+
 	// 登录
 	@RequestMapping("/login")
-	public @ResponseBody Object login(@BeanParam User u, HttpSession session) {
+	@ResponseBody
+	public Object login(@BeanParam User u, HttpSession session) {
 		try {
 			User user = userService.login(u.getUsername(), u.getPwd());
 			user.setPwd(null);
@@ -34,10 +46,17 @@ public class UserController {
 		}
 	}
 
+	// 登出
+	@RequestMapping("/logout")
+	@ResponseBody
+	public void logout(HttpSession session) {
+		session.removeAttribute("user");
+	}
+
 	// 修改密码
 	@RequestMapping("/changePwd")
-	public @ResponseBody WebException changePwd(@FormParam("pwd") String pwd, @FormParam("old") String old,
-			HttpSession session) {
+	@ResponseBody
+	public WebException changePwd(@FormParam("pwd") String pwd, @FormParam("old") String old, HttpSession session) {
 		try {
 			User u = (User) session.getAttribute("user");
 			userService.changePwd(u.getId(), old, pwd);
@@ -50,14 +69,16 @@ public class UserController {
 
 	// 列表
 	@RequestMapping("/list")
-	public @ResponseBody PageInfo list(@BeanParam PageParam param) {
+	@ResponseBody
+	public PageInfo list(@BeanParam PageParam param) {
 		PageInfo info = userService.find(param);
 		return info;
 	}
 
 	// 根据id获取
 	@RequestMapping("/get/{id}")
-	public @ResponseBody User get(@PathVariable Integer id) {
+	@ResponseBody
+	public User get(@PathVariable Integer id) {
 		User user = userService.getById(id);
 		return user;
 	}
