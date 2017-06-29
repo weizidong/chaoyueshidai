@@ -61,7 +61,7 @@ public class FileUtil {
 			// 返回值
 			Files f = new Files();
 			f.setName(fullName.substring(0, fullName.length() - ext.length()));
-			f.setUrl(Configs.hostname + folder + fileName + ext);
+			f.setUrl("/" + folder + fileName + ext);
 			f.setSuffix(ext.substring(1));
 			f.setTime(System.currentTimeMillis() - start);
 			return f;
