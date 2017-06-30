@@ -41,7 +41,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		// 获取请求的 URL
 		String url = request.getServletPath();
 		String query = request.getQueryString();
-		log.debug("请求：" + url + "?" + query);
+		log.debug("请求：" + url + (query != null ? ("?" + query) : ""));
 		String debug = request.getParameter("debug");
 		HttpSession session = request.getSession();
 		session.setAttribute("start", System.currentTimeMillis());

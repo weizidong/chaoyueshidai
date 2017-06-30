@@ -22,14 +22,18 @@ public class ExampleController {
 	private ExampleService exampleService;
 
 	// 获取列表
-	@RequestMapping(value = "/find/{type}", method = RequestMethod.POST)
+	@RequestMapping(value = "/find/{type}/{userid}", method = RequestMethod.POST)
 	@ResponseBody
-	public PageInfo find(@RequestBody PageParam param, @PathVariable String type, HttpSession session) {
-		User user = (User) session.getAttribute("user");
-		if (user != null && user.getId() != null) {
-			return exampleService.find(user.getId(), type, param);
+	public PageInfo find(@RequestBody PageParam param, @PathVariable String type, @PathVariable Integer userid,
+			HttpSession session) {
+		if (userid != null && userid == -1) {
+			User user = (User) session.getAttribute("user");
+			userid = user.getId();
 		}
-		return null;
+		if (userid == null) {
+			return new PageInfo();
+		}
+		return exampleService.find(userid, type, param);
 	}
 
 	// 根据id获取
