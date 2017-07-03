@@ -2,53 +2,64 @@ package xin.chaoyueshidai.module.note;
 
 import java.util.Date;
 
-import com.alibaba.fastjson.JSON;
-
-// 笔记
 public class Note {
-	private Integer id;
-	// 题目
-	private String title;
-	// 内容
-	private Date created;
-	// 创建时间
-	private String content;
+    private Integer id;
 
-	public Integer getId() {
-		return id;
-	}
+    private String title;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    private Date created;
 
-	public String getTitle() {
-		return title;
-	}
+    private Integer userid;
 
-	public void setTitle(String title) {
-		this.title = title == null ? null : title.trim();
-	}
+    private String type;
 
-	public Date getCreated() {
-		return created;
-	}
+    private String content;
 
-	public void setCreated(Date created) {
-		this.created = created;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setContent(String content) {
-		this.content = content == null ? null : content.trim();
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	@Override
-	public String toString() {
-		return JSON.toJSONString(this);
-	}
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
+    }
 
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
+    }
 }
