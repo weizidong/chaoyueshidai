@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-06-26 17:05:20
+Date: 2017-07-03 17:22:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -38,8 +38,25 @@ CREATE TABLE `example` (
   `url` varchar(255) DEFAULT NULL,
   `pic` varchar(255) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
+  `userid` int(11) DEFAULT NULL,
+  `type` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Table structure for files
+-- ----------------------------
+DROP TABLE IF EXISTS `files`;
+CREATE TABLE `files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `suffix` varchar(10) DEFAULT NULL,
+  `time` bigint(20) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `des` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Table structure for note
@@ -50,6 +67,8 @@ CREATE TABLE `note` (
   `title` varchar(50) DEFAULT NULL,
   `content` longtext,
   `created` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `userid` int(11) DEFAULT NULL,
+  `type` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -79,4 +98,4 @@ CREATE TABLE `user` (
   `created` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `tel` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
