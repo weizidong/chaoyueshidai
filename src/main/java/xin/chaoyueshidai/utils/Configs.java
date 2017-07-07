@@ -3,6 +3,8 @@ package xin.chaoyueshidai.utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * 加载系统配置
  * 
@@ -54,6 +56,7 @@ public class Configs {
 		EncodingAESKey = prop.getProperty("EncodingAESKey");
 		Token = prop.getProperty("Token");
 		log.info("启动成功！版本：" + version);
+		log.info("配置：" + JSON.toJSONString(prop));
 	}
 
 	/**
