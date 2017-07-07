@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import xin.chaoyueshidai.dto.PageInfo;
-import xin.chaoyueshidai.dto.WebException;
 import xin.chaoyueshidai.param.PageParam;
 
 // 用户业务
@@ -17,13 +16,13 @@ public class UserService {
 	private UserMapper mapper;
 
 	// 登录
-	public User login(String username, String pwd) throws WebException {
+	public User login(String username, String pwd) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	// 修改密码
-	public void changePwd(Integer id, String old, String pwd) throws WebException {
+	public void changePwd(Integer id, String old, String pwd) {
 		// TODO Auto-generated method stub
 
 	}

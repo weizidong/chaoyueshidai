@@ -42,9 +42,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 		String url = request.getServletPath();
 		String query = request.getQueryString();
 		log.debug("请求：" + url + (query != null ? ("?" + query) : ""));
-		if (!url.startsWith("/rest/")) {
-			request.getRequestDispatcher("/index.html").forward(request, response);
-			return flag;
+		if (url.startsWith("/rest/wechat/")) {
+			return !flag;
 		}
 		String debug = request.getParameter("debug");
 		HttpSession session = request.getSession();

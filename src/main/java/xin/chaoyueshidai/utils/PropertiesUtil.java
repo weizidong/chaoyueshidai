@@ -25,7 +25,7 @@ public class PropertiesUtil {
 	private URI uri;
 
 	public PropertiesUtil(String fileName) {
-		readProperties(fileName);
+		readProperties("/" + fileName);
 	}
 
 	private void readProperties(String fileName) {

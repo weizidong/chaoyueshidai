@@ -2,8 +2,7 @@ package xin.chaoyueshidai.dto;
 
 import com.alibaba.fastjson.JSON;
 
-@SuppressWarnings("serial")
-public class WebException extends RuntimeException {
+public class WebException {
 	private Integer code;
 	private String msg;
 

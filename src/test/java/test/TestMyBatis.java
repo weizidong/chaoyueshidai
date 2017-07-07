@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
 
-import xin.chaoyueshidai.dto.WebException;
 import xin.chaoyueshidai.module.user.User;
 import xin.chaoyueshidai.module.user.UserService;
 
@@ -31,7 +30,7 @@ public class TestMyBatis {
 	// }
 
 	@Test
-	public void test1() throws WebException {
+	public void test1() {
 		User user = new User();
 		// user.setName("超级管理员");
 		user.setPwd("123456");

@@ -39,14 +39,10 @@ public class UserController {
 	@RequestMapping("/login")
 	@ResponseBody
 	public Object login(@BeanParam User u, HttpSession session) {
-		try {
-			User user = userService.login(u.getUsername(), u.getPwd());
-			user.setPwd(null);
-			session.setAttribute("user", user);
-			return user;
-		} catch (WebException e) {
-			return e;
-		}
+		User user = userService.login(u.getUsername(), u.getPwd());
+		user.setPwd(null);
+		session.setAttribute("user", user);
+		return user;
 	}
 
 	// 登出
@@ -60,14 +56,10 @@ public class UserController {
 	@RequestMapping("/changePwd")
 	@ResponseBody
 	public WebException changePwd(@FormParam("pwd") String pwd, @FormParam("old") String old, HttpSession session) {
-		try {
-			User u = (User) session.getAttribute("user");
-			userService.changePwd(u.getId(), old, pwd);
-			session.removeAttribute("user");
-			return WebException.success("密码修改成功，请重新登录！");
-		} catch (WebException e) {
-			return e;
-		}
+		User u = (User) session.getAttribute("user");
+		userService.changePwd(u.getId(), old, pwd);
+		session.removeAttribute("user");
+		return WebException.success("密码修改成功，请重新登录！");
 	}
 
 	// 列表
