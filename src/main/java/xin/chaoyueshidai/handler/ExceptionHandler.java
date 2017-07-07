@@ -37,7 +37,7 @@ public class ExceptionHandler extends SimpleMappingExceptionResolver {
 			e.printStackTrace();
 		}
 		if (modelAndView == null) {
-			modelAndView = new ModelAndView("500");
+			modelAndView = new ModelAndView("common/500");
 			Map<String, Object> map = new HashMap<>();
 			map.put("msg", ex.getMessage());
 			modelAndView.addObject(map);
