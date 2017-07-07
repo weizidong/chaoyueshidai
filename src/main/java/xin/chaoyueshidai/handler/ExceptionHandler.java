@@ -28,10 +28,10 @@ public class ExceptionHandler extends SimpleMappingExceptionResolver {
 			Exception ex) {
 		ModelAndView modelAndView = super.doResolveException(request, response, handler, ex);
 		String url = request.getServletPath();
-		log.debug("请求：" + url);
+		log.error("请求：" + url);
 		try {
-			log.debug("参数：" + StreamUtils.copyToString(request.getInputStream(), Charset.defaultCharset()));
-			log.error("异常：" + ex);
+			log.error("参数：" + StreamUtils.copyToString(request.getInputStream(), Charset.defaultCharset()));
+			log.error("异常：" + ex.getMessage());
 			ex.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
