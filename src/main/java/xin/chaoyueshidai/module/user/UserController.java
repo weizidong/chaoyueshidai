@@ -26,10 +26,10 @@ public class UserController {
 	@ResponseBody
 	public Object mine(HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		user = userService.getById(user.getId());
 		if (user == null) {
-			return WebException.error("用户不存在！");
+			return WebException.error("用户未登录！");
 		}
+		user = userService.getById(user.getId());
 		user.setPwd(null);
 		session.setAttribute("user", user);
 		return user;
