@@ -21,6 +21,12 @@ public class UserController {
 	@Resource
 	private UserService userService;
 
+	// 修改我的资料
+	@RequestMapping("/dyh/update")
+	public String updateDyh(HttpSession session) {
+		return "user/update";
+	}
+
 	// 获取当前登录
 	@RequestMapping("/mine")
 	@ResponseBody
@@ -30,20 +36,29 @@ public class UserController {
 			return WebException.error("用户未登录！");
 		}
 		user = userService.getById(user.getId());
-		user.setPwd(null);
 		session.setAttribute("user", user);
 		return user;
 	}
 
-	// 登录
-	@RequestMapping("/login")
-	@ResponseBody
-	public Object login(@BeanParam User u, HttpSession session) {
-		User user = userService.login(u.getUsername(), u.getPwd());
-		user.setPwd(null);
-		session.setAttribute("user", user);
-		return user;
-	}
+	// // 登录
+	// @RequestMapping("/login")
+	// @ResponseBody
+	// public Object login(@BeanParam User u, HttpSession session) {
+	// User user = userService.login(u.getUsername(), u.getPwd());
+	// user.setPwd(null);
+	// session.setAttribute("user", user);
+	// return user;
+	// }
+	//
+	// // 登录二维码
+	// @RequestMapping("/login_qrcode")
+	// @ResponseBody
+	// public Object login() {
+	// User user = userService.login(u.getUsername(), u.getPwd());
+	// user.setPwd(null);
+	// session.setAttribute("user", user);
+	// return user;
+	// }
 
 	// 登出
 	@RequestMapping("/logout")

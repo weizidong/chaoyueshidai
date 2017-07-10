@@ -1,11 +1,11 @@
 package xin.chaoyueshidai.module.wechat;
 
 import javax.annotation.Resource;
-import javax.ws.rs.core.MediaType;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,8 +27,9 @@ public class WechatController {
 	/**
 	 * 服务号回调过来的信息(明文传输)
 	 */
-	@RequestMapping(value = "/fw", method = RequestMethod.POST, consumes = MediaType.TEXT_XML, produces = MediaType.TEXT_XML)
-	public String fwPush(String data) {
+	@RequestMapping(value = "/fw", method = RequestMethod.POST)
+	@ResponseBody
+	public String fwPush(@RequestBody String data) {
 		log.debug("接收到服务号推送的消息。。。");
 		log.debug("参数：\n" + data);
 		WechatMsg msg = WeChatXmlUtil.xmlToBean(data, WechatMsg.class);

@@ -8,11 +8,15 @@ package xin.chaoyueshidai.module.wechat.event;
  */
 public abstract class EventKey {
 	/**
-	 * 最新资讯
+	 * RSS
 	 */
-	public static final String LAST_NEWS = "LAST_NEWS";
+	public static final String RSS = "订阅";
 	/**
-	 * 最新活动
+	 * 笔记
 	 */
-	public static final String LAST_ACTIVITY = "LAST_ACTIVITY";
+	public static final String NOTE = "笔记";
+	/**
+	 * 我
+	 */
+	public static final String ME = "我";
 }

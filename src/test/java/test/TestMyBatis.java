@@ -32,8 +32,7 @@ public class TestMyBatis {
 	@Test
 	public void test1() {
 		User user = new User();
-		// user.setName("超级管理员");
-		user.setPwd("123456");
+		user.setName("超级管理员");
 		user.setType(1);
 		// user.setUserid("admin");
 		// userService.register(user);

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-07-03 17:22:05
+Date: 2017-07-10 17:09:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -79,20 +79,13 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `subscribe` int(1) DEFAULT '0',
-  `openid` varchar(34) DEFAULT NULL,
+  `openid` varchar(36) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
   `nickname` varchar(100) DEFAULT NULL,
   `sex` int(1) DEFAULT '0',
   `city` varchar(10) DEFAULT NULL,
-  `country` varchar(10) DEFAULT NULL,
-  `province` varchar(10) DEFAULT NULL,
-  `language` varchar(10) DEFAULT NULL,
   `headimgurl` varchar(255) DEFAULT NULL,
   `subscribe_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `unionid` varchar(34) DEFAULT NULL,
-  `remark` varchar(255) DEFAULT NULL,
-  `groupid` int(2) DEFAULT '0',
-  `username` varchar(100) DEFAULT NULL,
-  `pwd` varchar(34) DEFAULT NULL,
   `type` int(1) DEFAULT '0',
   `login_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `created` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,

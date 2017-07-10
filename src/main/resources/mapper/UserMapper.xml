@@ -5,19 +5,12 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="subscribe" property="subscribe" jdbcType="INTEGER" />
     <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="nickname" property="nickname" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="INTEGER" />
     <result column="city" property="city" jdbcType="VARCHAR" />
-    <result column="country" property="country" jdbcType="VARCHAR" />
-    <result column="province" property="province" jdbcType="VARCHAR" />
-    <result column="language" property="language" jdbcType="VARCHAR" />
     <result column="headimgurl" property="headimgurl" jdbcType="VARCHAR" />
     <result column="subscribe_time" property="subscribeTime" jdbcType="TIMESTAMP" />
-    <result column="unionid" property="unionid" jdbcType="VARCHAR" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-    <result column="groupid" property="groupid" jdbcType="INTEGER" />
-    <result column="username" property="username" jdbcType="VARCHAR" />
-    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
@@ -82,9 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, subscribe, openid, nickname, sex, city, country, province, language, headimgurl, 
-    subscribe_time, unionid, remark, groupid, username, pwd, type, login_time, created, 
-    tel
+    id, subscribe, openid, name, nickname, sex, city, headimgurl, subscribe_time, type, 
+    login_time, created, tel
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="xin.chaoyueshidai.module.user.UserExample" >
     select
@@ -120,20 +112,16 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user (subscribe, openid, nickname, 
-      sex, city, country, 
-      province, language, headimgurl, 
-      subscribe_time, unionid, remark, 
-      groupid, username, pwd, 
-      type, login_time, created, 
-      tel)
-    values (#{subscribe,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
-      #{province,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{headimgurl,jdbcType=VARCHAR}, 
-      #{subscribeTime,jdbcType=TIMESTAMP}, #{unionid,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{groupid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
-      #{type,jdbcType=INTEGER}, #{loginTime,jdbcType=TIMESTAMP}, #{created,jdbcType=TIMESTAMP}, 
-      #{tel,jdbcType=VARCHAR})
+    insert into user (subscribe, openid, name, 
+      nickname, sex, city, 
+      headimgurl, subscribe_time, type, 
+      login_time, created, tel
+      )
+    values (#{subscribe,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, 
+      #{headimgurl,jdbcType=VARCHAR}, #{subscribeTime,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER}, 
+      #{loginTime,jdbcType=TIMESTAMP}, #{created,jdbcType=TIMESTAMP}, #{tel,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="xin.chaoyueshidai.module.user.User" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -147,6 +135,9 @@
       <if test="openid != null" >
         openid,
       </if>
+      <if test="name != null" >
+        name,
+      </if>
       <if test="nickname != null" >
         nickname,
       </if>
@@ -156,35 +147,11 @@
       <if test="city != null" >
         city,
       </if>
-      <if test="country != null" >
-        country,
-      </if>
-      <if test="province != null" >
-        province,
-      </if>
-      <if test="language != null" >
-        language,
-      </if>
       <if test="headimgurl != null" >
         headimgurl,
       </if>
       <if test="subscribeTime != null" >
         subscribe_time,
-      </if>
-      <if test="unionid != null" >
-        unionid,
-      </if>
-      <if test="remark != null" >
-        remark,
-      </if>
-      <if test="groupid != null" >
-        groupid,
-      </if>
-      <if test="username != null" >
-        username,
-      </if>
-      <if test="pwd != null" >
-        pwd,
       </if>
       <if test="type != null" >
         type,
@@ -206,6 +173,9 @@
       <if test="openid != null" >
         #{openid,jdbcType=VARCHAR},
       </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
       <if test="nickname != null" >
         #{nickname,jdbcType=VARCHAR},
       </if>
@@ -215,35 +185,11 @@
       <if test="city != null" >
         #{city,jdbcType=VARCHAR},
       </if>
-      <if test="country != null" >
-        #{country,jdbcType=VARCHAR},
-      </if>
-      <if test="province != null" >
-        #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="language != null" >
-        #{language,jdbcType=VARCHAR},
-      </if>
       <if test="headimgurl != null" >
         #{headimgurl,jdbcType=VARCHAR},
       </if>
       <if test="subscribeTime != null" >
         #{subscribeTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="unionid != null" >
-        #{unionid,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="groupid != null" >
-        #{groupid,jdbcType=INTEGER},
-      </if>
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="pwd != null" >
-        #{pwd,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
@@ -277,6 +223,9 @@
       <if test="record.openid != null" >
         openid = #{record.openid,jdbcType=VARCHAR},
       </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
       <if test="record.nickname != null" >
         nickname = #{record.nickname,jdbcType=VARCHAR},
       </if>
@@ -286,35 +235,11 @@
       <if test="record.city != null" >
         city = #{record.city,jdbcType=VARCHAR},
       </if>
-      <if test="record.country != null" >
-        country = #{record.country,jdbcType=VARCHAR},
-      </if>
-      <if test="record.province != null" >
-        province = #{record.province,jdbcType=VARCHAR},
-      </if>
-      <if test="record.language != null" >
-        language = #{record.language,jdbcType=VARCHAR},
-      </if>
       <if test="record.headimgurl != null" >
         headimgurl = #{record.headimgurl,jdbcType=VARCHAR},
       </if>
       <if test="record.subscribeTime != null" >
         subscribe_time = #{record.subscribeTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.unionid != null" >
-        unionid = #{record.unionid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.remark != null" >
-        remark = #{record.remark,jdbcType=VARCHAR},
-      </if>
-      <if test="record.groupid != null" >
-        groupid = #{record.groupid,jdbcType=INTEGER},
-      </if>
-      <if test="record.username != null" >
-        username = #{record.username,jdbcType=VARCHAR},
-      </if>
-      <if test="record.pwd != null" >
-        pwd = #{record.pwd,jdbcType=VARCHAR},
       </if>
       <if test="record.type != null" >
         type = #{record.type,jdbcType=INTEGER},
@@ -338,19 +263,12 @@
     set id = #{record.id,jdbcType=INTEGER},
       subscribe = #{record.subscribe,jdbcType=INTEGER},
       openid = #{record.openid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
       nickname = #{record.nickname,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=INTEGER},
       city = #{record.city,jdbcType=VARCHAR},
-      country = #{record.country,jdbcType=VARCHAR},
-      province = #{record.province,jdbcType=VARCHAR},
-      language = #{record.language,jdbcType=VARCHAR},
       headimgurl = #{record.headimgurl,jdbcType=VARCHAR},
       subscribe_time = #{record.subscribeTime,jdbcType=TIMESTAMP},
-      unionid = #{record.unionid,jdbcType=VARCHAR},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      groupid = #{record.groupid,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR},
-      pwd = #{record.pwd,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=INTEGER},
       login_time = #{record.loginTime,jdbcType=TIMESTAMP},
       created = #{record.created,jdbcType=TIMESTAMP},
@@ -368,6 +286,9 @@
       <if test="openid != null" >
         openid = #{openid,jdbcType=VARCHAR},
       </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
       <if test="nickname != null" >
         nickname = #{nickname,jdbcType=VARCHAR},
       </if>
@@ -377,35 +298,11 @@
       <if test="city != null" >
         city = #{city,jdbcType=VARCHAR},
       </if>
-      <if test="country != null" >
-        country = #{country,jdbcType=VARCHAR},
-      </if>
-      <if test="province != null" >
-        province = #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="language != null" >
-        language = #{language,jdbcType=VARCHAR},
-      </if>
       <if test="headimgurl != null" >
         headimgurl = #{headimgurl,jdbcType=VARCHAR},
       </if>
       <if test="subscribeTime != null" >
         subscribe_time = #{subscribeTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="unionid != null" >
-        unionid = #{unionid,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="groupid != null" >
-        groupid = #{groupid,jdbcType=INTEGER},
-      </if>
-      <if test="username != null" >
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="pwd != null" >
-        pwd = #{pwd,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
         type = #{type,jdbcType=INTEGER},
@@ -422,27 +319,20 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="xin.chaoyueshidai.module.user.User">
-	update user
-	set subscribe = #{subscribe,jdbcType=INTEGER},
-	openid = #{openid,jdbcType=VARCHAR},
-	nickname = #{nickname,jdbcType=VARCHAR},
-	sex = #{sex,jdbcType=INTEGER},
-	city = #{city,jdbcType=VARCHAR},
-	country = #{country,jdbcType=VARCHAR},
-	province = #{province,jdbcType=VARCHAR},
-	language = #{language,jdbcType=VARCHAR},
-	headimgurl = #{headimgurl,jdbcType=VARCHAR},
-	subscribe_time = #{subscribeTime,jdbcType=TIMESTAMP},
-	unionid = #{unionid,jdbcType=VARCHAR},
-	remark = #{remark,jdbcType=VARCHAR},
-	groupid = #{groupid,jdbcType=INTEGER},
-	username = #{username,jdbcType=VARCHAR},
-	pwd = #{pwd,jdbcType=VARCHAR},
-	type = #{type,jdbcType=INTEGER},
-	login_time = #{loginTime,jdbcType=TIMESTAMP},
-	created = #{created,jdbcType=TIMESTAMP},
-	tel = #{tel,jdbcType=VARCHAR}
-	where id = #{id,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="xin.chaoyueshidai.module.user.User" >
+    update user
+    set subscribe = #{subscribe,jdbcType=INTEGER},
+      openid = #{openid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      city = #{city,jdbcType=VARCHAR},
+      headimgurl = #{headimgurl,jdbcType=VARCHAR},
+      subscribe_time = #{subscribeTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=INTEGER},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
+      created = #{created,jdbcType=TIMESTAMP},
+      tel = #{tel,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

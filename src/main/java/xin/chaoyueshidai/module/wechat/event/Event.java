@@ -1,5 +1,6 @@
 package xin.chaoyueshidai.module.wechat.event;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,9 @@ import xin.chaoyueshidai.module.user.User;
 import xin.chaoyueshidai.module.user.UserService;
 import xin.chaoyueshidai.module.wechat.base.MsgType;
 import xin.chaoyueshidai.module.wechat.base.XmlResp;
-import xin.chaoyueshidai.module.wechat.user.FwUserApi;
+import xin.chaoyueshidai.module.wechat.msg.dto.ARTICLE;
 import xin.chaoyueshidai.param.WechatMsg;
+import xin.chaoyueshidai.utils.Configs;
 import xin.chaoyueshidai.utils.ThreadPoolUtils;
 
 /**
@@ -89,19 +91,23 @@ public class Event {
 
 	// 关注事件
 	private String subscribe(WechatMsg msg) {
-		ThreadPoolUtils.execute(() -> {
-			User u = userService.getByOpenId(msg.getFromUserName());
-			if (u == null) {
-				u = FwUserApi.get(msg.getFromUserName());
-				if (u != null) {
-					userService.save(u);
-				}
-			} else {
-				u.setSubscribe(Subscribe.已关注);
-				u.setSubscribeTime(new Date());
-				userService.update(u);
-			}
-		});
-		return XmlResp.SUCCESS;
+		User u = userService.getByOpenId(msg.getFromUserName());
+		ARTICLE a1 = new ARTICLE("操作说明", "订阅号操作说明", Configs.hostname + "/rest/user/fwh/update",
+				Configs.hostname + "/static/img/me.png");
+		if (u == null) {
+			u = new User();
+			u.setOpenid(msg.getFromUserName());
+			u.setSubscribe(Subscribe.已关注);
+			u.setSubscribeTime(new Date());
+			userService.save(u);
+			ARTICLE a2 = new ARTICLE("完善资料", "亲爱的用户，欢迎你，请完善资料!以便提供后续的服务！", Configs.hostname + "/rest/user/fwh/update",
+					Configs.hostname + "/static/img/me.png");
+			return XmlResp.buildNews(msg.getFromUserName(), msg.getToUserName(), Arrays.asList(a1, a2));
+		} else {
+			u.setSubscribe(Subscribe.已关注);
+			u.setSubscribeTime(new Date());
+			userService.update(u);
+			return XmlResp.buildNews(msg.getFromUserName(), msg.getToUserName(), Arrays.asList(a1));
+		}
 	}
 }
