@@ -9,11 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import xin.chaoyueshidai.param.WechatMsg;
-import xin.chaoyueshidai.utils.AesException;
 import xin.chaoyueshidai.utils.Configs;
-import xin.chaoyueshidai.utils.WXBizMsgCrypt;
+import xin.chaoyueshidai.utils.SignatureUtil;
 import xin.chaoyueshidai.utils.WeChatXmlUtil;
 
 // 微信请求
@@ -29,29 +29,26 @@ public class WechatController {
 	 */
 	@RequestMapping(value = "/fw", method = RequestMethod.POST, consumes = MediaType.TEXT_XML, produces = MediaType.TEXT_XML)
 	public String fwPush(String data) {
-		log.debug("接收到微信推送的消息。。。");
-		log.debug("参数：" + data);
+		log.debug("接收到服务号推送的消息。。。");
+		log.debug("参数：\n" + data);
 		WechatMsg msg = WeChatXmlUtil.xmlToBean(data, WechatMsg.class);
 		String rMsg = wechatService.push(msg);
-		log.debug("结果：" + rMsg);
+		log.debug("结果：\n" + rMsg);
 		return rMsg;
 	}
 
 	/**
 	 * 验证回调URL
 	 */
-	@RequestMapping(value = "/fw", method = RequestMethod.GET, produces = MediaType.TEXT_XML)
+	@RequestMapping(value = "/fw", method = RequestMethod.GET)
+	@ResponseBody
 	public String fwVerifyURL(@RequestParam("signature") String signature, @RequestParam("timestamp") String timestamp,
 			@RequestParam("nonce") String nonce, @RequestParam("echostr") String echostr) {
-		log.debug("验证回调URL...");
-		String sEchoStr = null;
-		try {
-			WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(Configs.Token, Configs.EncodingAESKey, Configs.Appid);
-			sEchoStr = wxcpt.VerifyURL(signature, timestamp, nonce, echostr);
-		} catch (AesException e) {
-			e.printStackTrace();
+		Boolean check = SignatureUtil.checkSignature(Configs.Token, signature, timestamp, nonce);
+		log.debug("验证回调URL：" + check);
+		if (check) {
+			return echostr;
 		}
-		log.debug("验证回调URL结果：" + sEchoStr);
-		return sEchoStr;
+		return null;
 	}
 }

@@ -39,7 +39,8 @@
 	<mvc:annotation-driven />
 	<mvc:resources location="/static/" mapping="/static/**"></mvc:resources>
 	<mvc:resources location="/view/" mapping="/index.html"></mvc:resources>
-	<mvc:resources location="/favicon.ico" mapping="/static/favicon.ico"></mvc:resources>
+	<mvc:resources location="/static/favicon.ico" mapping="/favicon.ico"></mvc:resources>
+	<mvc:resources location="/MP_verify_XkOGEgiACXHaTBgB.txt" mapping="/MP_verify_XkOGEgiACXHaTBgB.txt"></mvc:resources>
 	<!-- 配置拦截器 -->
     <mvc:interceptors>
         <mvc:interceptor>
