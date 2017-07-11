@@ -1,13 +1,9 @@
 package xin.chaoyueshidai.interceptor;
 
-import java.net.URLEncoder;
-import java.text.MessageFormat;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import xin.chaoyueshidai.module.user.User;
 import xin.chaoyueshidai.module.user.UserService;
-import xin.chaoyueshidai.module.wechat.Token;
-import xin.chaoyueshidai.module.wechat.base.FwAPI;
-import xin.chaoyueshidai.utils.Configs;
-import xin.chaoyueshidai.utils.HttpClientUtil;
 
 public class LoginInterceptor implements HandlerInterceptor {
 	private static final Logger log = LogManager.getLogger(LoginInterceptor.class);
@@ -69,31 +61,38 @@ public class LoginInterceptor implements HandlerInterceptor {
 			return !flag;
 		}
 		// 判断是否来自微信请求回调
-		String code = request.getParameter("code");
-		if (StringUtils.isNotBlank(code) && user == null) {
-			Long time = Long.parseLong(request.getParameter("state"));
-			log.debug("微信授权成功!\t用时：" + (System.currentTimeMillis() - time) + "ms");
-			Token token = HttpClientUtil
-					.doGet(MessageFormat.format(FwAPI.ACCESS_TOKEN, Configs.Appid, Configs.Secret, code), Token.class);
-			if (token.getOpenid() == null) {
-				throw new RuntimeException(token.getErrmsg());
-			}
-			user = userService.getByOpenId(token.getOpenid());
-			if (user == null) {
-				user = new User();
-				user.setOpenid(token.getOpenid());
-				userService.save(user);
+//		String code = request.getParameter("code");
+//		if (StringUtils.isNotBlank(code) && user == null) {
+//			Long time = Long.parseLong(request.getParameter("state"));
+//			log.debug("微信授权成功!\t用时：" + (System.currentTimeMillis() - time) + "ms");
+//			Token token = HttpClientUtil
+//					.doGet(MessageFormat.format(FwAPI.ACCESS_TOKEN, Configs.Appid, Configs.Secret, code), Token.class);
+//			if (token.getOpenid() == null) {
+//				throw new RuntimeException(token.getErrmsg());
+//			}
+//			user = userService.getByOpenId(token.getOpenid());
+//			if (user == null) {
+//				user = new User();
+//				user.setOpenid(token.getOpenid());
+//				userService.save(user);
+//			}
+//			session.setAttribute("user", user);
+//			return !flag;
+//		}
+		// 判断是否来自微信请求（订阅号不做授权处理，没有api权限）
+		if (user == null && url.contains("/dyh/")) {
+//			String getCodeUrl = MessageFormat.format(FwAPI.AUTHORIZE, Configs.Appid,
+//					URLEncoder.encode(Configs.hostname + url, "utf-8"), String.valueOf(System.currentTimeMillis()));
+//			log.debug("授权:" + getCodeUrl);
+//			response.sendRedirect(getCodeUrl);
+			String openId = request.getServletPath().substring(request.getServletPath().lastIndexOf("/")+1);
+			log.debug("订阅号openId："+openId);
+			user = userService.getByOpenId(openId);
+			if(user == null){
+				return flag;
 			}
 			session.setAttribute("user", user);
 			return !flag;
-		}
-		// 判断是否来自微信请求
-		if (user == null && url.contains("/dyh/")) {
-			String getCodeUrl = MessageFormat.format(FwAPI.AUTHORIZE, Configs.Appid,
-					URLEncoder.encode(Configs.hostname + url, "utf-8"), String.valueOf(System.currentTimeMillis()));
-			log.debug("授权:" + getCodeUrl);
-			response.sendRedirect(getCodeUrl);
-			return flag;
 		}
 		// 判断是否登录
 		for (String s : IGNORE_URI) {
@@ -104,8 +103,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		}
 		if (!flag) {
 			// 获取 Session 并判断是否登录
-			User admin = (User) session.getAttribute("user");
-			if (admin == null) {
+			if (user == null) {
 				// 如果未登录，进行拦截，跳转到登录界面
 				request.getRequestDispatcher("/rest/user/login").forward(request, response);
 			} else {

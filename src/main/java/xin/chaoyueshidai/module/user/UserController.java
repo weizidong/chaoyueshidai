@@ -22,7 +22,7 @@ public class UserController {
 	private UserService userService;
 
 	// 修改我的资料
-	@RequestMapping("/dyh/update")
+	@RequestMapping("/dyh/update/{openId}")
 	public String updateDyh(HttpSession session) {
 		return "user/update";
 	}

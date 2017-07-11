@@ -1,6 +1,10 @@
 package xin.chaoyueshidai.module.wechat;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,14 +32,17 @@ public class WechatController {
 	 * 服务号回调过来的信息(明文传输)
 	 */
 	@RequestMapping(value = "/fw", method = RequestMethod.POST)
-	@ResponseBody
-	public String fwPush(@RequestBody String data) {
+	public void fwPush(@RequestBody String data, HttpServletResponse response) throws IOException {
 		log.debug("接收到服务号推送的消息。。。");
 		log.debug("参数：\n" + data);
 		WechatMsg msg = WeChatXmlUtil.xmlToBean(data, WechatMsg.class);
 		String rMsg = wechatService.push(msg);
 		log.debug("结果：\n" + rMsg);
-		return rMsg;
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+		out.print(rMsg);
+		out.flush();
+		out.close();
 	}
 
 	/**
