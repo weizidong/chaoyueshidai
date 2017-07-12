@@ -20,7 +20,7 @@
 	<!-- UrlFilter -->
 	<filter>
 		<filter-name>UrlFilter</filter-name>
-		<filter-class>xin.chaoyueshidai.interceptor.UrlFilter</filter-class>
+		<filter-class>xin.chaoyueshidai.filter.UrlFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>UrlFilter</filter-name>

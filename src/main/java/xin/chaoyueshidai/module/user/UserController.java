@@ -5,19 +5,24 @@ import javax.servlet.http.HttpSession;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.FormParam;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import xin.chaoyueshidai.dto.PageInfo;
+import com.alibaba.fastjson.JSON;
+
+import xin.chaoyueshidai.dto.RestResponse;
 import xin.chaoyueshidai.dto.WebException;
-import xin.chaoyueshidai.param.PageParam;
 
 // 用户请求
 @Controller
 @RequestMapping("/rest/user")
 public class UserController {
+	private static final Logger log = LogManager.getLogger(UserController.class);
 	@Resource
 	private UserService userService;
 
@@ -41,13 +46,14 @@ public class UserController {
 	}
 
 	// 登录
-	@RequestMapping("/login")
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public User login(@BeanParam User u, HttpSession session) {
-		User user = userService.login(u.getTel(), u.getPwd());
-		user.setPwd(null);
-		session.setAttribute("user", user);
-		return user;
+	public RestResponse login(@RequestBody String data, HttpSession session) {
+		User user = JSON.parseObject(data, User.class);
+		log.debug("参数：" + user);
+		RestResponse res = userService.login(user.getTel(), user.getPwd());
+		session.setAttribute("user", res.getData());
+		return res;
 	}
 
 	// 注册
@@ -56,7 +62,7 @@ public class UserController {
 	public void register(@BeanParam User u, HttpSession session) {
 		userService.save(u);
 	}
-	
+
 	// // 登录二维码
 	// @RequestMapping("/login_qrcode")
 	// @ResponseBody
@@ -84,31 +90,4 @@ public class UserController {
 		return WebException.success("密码修改成功，请重新登录！");
 	}
 
-	// 列表
-	@RequestMapping("/list")
-	@ResponseBody
-	public PageInfo list(@BeanParam PageParam param) {
-		PageInfo info = userService.find(param);
-		return info;
-	}
-
-	// 根据id获取
-	@RequestMapping("/get/{id}")
-	@ResponseBody
-	public User get(@PathVariable Integer id) {
-		User user = userService.getById(id);
-		return user;
-	}
-
-	// 重置密码
-	@RequestMapping("/reset/{id}")
-	public void reset(@PathVariable Integer id) {
-		userService.reset(id);
-	}
-
-	// 修改权限
-	@RequestMapping("/changeType/{id}/{type}")
-	public void changeType(@PathVariable Integer id, @PathVariable Integer type) {
-		userService.changeType(id, type);
-	}
 }

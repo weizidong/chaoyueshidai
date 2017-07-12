@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import xin.chaoyueshidai.dto.PageInfo;
+import xin.chaoyueshidai.dto.RestResponse;
 import xin.chaoyueshidai.dto.WebException;
 import xin.chaoyueshidai.param.PageParam;
 import xin.chaoyueshidai.utils.MD5Utils;
@@ -19,24 +20,29 @@ public class UserService {
 	private UserMapper mapper;
 
 	// 登录
-	public User login(String tel, String pwd) {
+	public RestResponse login(String tel, String pwd) {
 		UserExample e = new UserExample();
 		e.createCriteria().andTelEqualTo(tel);
 		List<User> list = mapper.selectByExample(e);
 		if (list == null || list.size() < 1) {
-			throw WebException.error("账号不存在！");
+			return RestResponse.error("账号不存在！");
 		}
 		User u = list.get(0);
 		if (MD5Utils.verifyPassword(pwd, u.getPwd())) {
-			return u;
+			u.setPwd(null);
+			return RestResponse.success(u);
 		}
-		throw WebException.error("密码错误！");
+		return RestResponse.error("密码错误！");
 	}
 
 	// 修改密码
 	public void changePwd(Integer id, String old, String pwd) {
-		// TODO Auto-generated method stub
-
+		User u = mapper.selectByPrimaryKey(id);
+		if (!MD5Utils.verifyPassword(old, u.getPwd())) {
+			throw WebException.error("原密码错误！");
+		}
+		u.setPwd(MD5Utils.getMD5ofStr(pwd));
+		mapper.updateByPrimaryKeySelective(u);
 	}
 
 	// 查询列表

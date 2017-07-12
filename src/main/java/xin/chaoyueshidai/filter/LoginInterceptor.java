@@ -1,4 +1,4 @@
-package xin.chaoyueshidai.interceptor;
+package xin.chaoyueshidai.filter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,34 +61,38 @@ public class LoginInterceptor implements HandlerInterceptor {
 			return !flag;
 		}
 		// 判断是否来自微信请求回调
-//		String code = request.getParameter("code");
-//		if (StringUtils.isNotBlank(code) && user == null) {
-//			Long time = Long.parseLong(request.getParameter("state"));
-//			log.debug("微信授权成功!\t用时：" + (System.currentTimeMillis() - time) + "ms");
-//			Token token = HttpClientUtil
-//					.doGet(MessageFormat.format(FwAPI.ACCESS_TOKEN, Configs.Appid, Configs.Secret, code), Token.class);
-//			if (token.getOpenid() == null) {
-//				throw new RuntimeException(token.getErrmsg());
-//			}
-//			user = userService.getByOpenId(token.getOpenid());
-//			if (user == null) {
-//				user = new User();
-//				user.setOpenid(token.getOpenid());
-//				userService.save(user);
-//			}
-//			session.setAttribute("user", user);
-//			return !flag;
-//		}
+		// String code = request.getParameter("code");
+		// if (StringUtils.isNotBlank(code) && user == null) {
+		// Long time = Long.parseLong(request.getParameter("state"));
+		// log.debug("微信授权成功!\t用时：" + (System.currentTimeMillis() - time) +
+		// "ms");
+		// Token token = HttpClientUtil
+		// .doGet(MessageFormat.format(FwAPI.ACCESS_TOKEN, Configs.Appid,
+		// Configs.Secret, code), Token.class);
+		// if (token.getOpenid() == null) {
+		// throw new RuntimeException(token.getErrmsg());
+		// }
+		// user = userService.getByOpenId(token.getOpenid());
+		// if (user == null) {
+		// user = new User();
+		// user.setOpenid(token.getOpenid());
+		// userService.save(user);
+		// }
+		// session.setAttribute("user", user);
+		// return !flag;
+		// }
 		// 判断是否来自微信请求（订阅号不做授权处理，没有api权限）
 		if (user == null && url.contains("/dyh/")) {
-//			String getCodeUrl = MessageFormat.format(FwAPI.AUTHORIZE, Configs.Appid,
-//					URLEncoder.encode(Configs.hostname + url, "utf-8"), String.valueOf(System.currentTimeMillis()));
-//			log.debug("授权:" + getCodeUrl);
-//			response.sendRedirect(getCodeUrl);
-			String openId = request.getServletPath().substring(request.getServletPath().lastIndexOf("/")+1);
-			log.debug("订阅号openId："+openId);
+			// String getCodeUrl = MessageFormat.format(FwAPI.AUTHORIZE,
+			// Configs.Appid,
+			// URLEncoder.encode(Configs.hostname + url, "utf-8"),
+			// String.valueOf(System.currentTimeMillis()));
+			// log.debug("授权:" + getCodeUrl);
+			// response.sendRedirect(getCodeUrl);
+			String openId = request.getServletPath().substring(request.getServletPath().lastIndexOf("/") + 1);
+			log.debug("订阅号openId：" + openId);
 			user = userService.getByOpenId(openId);
-			if(user == null){
+			if (user == null) {
 				return flag;
 			}
 			session.setAttribute("user", user);

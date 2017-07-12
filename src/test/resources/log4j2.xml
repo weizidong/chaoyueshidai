@@ -16,7 +16,7 @@
 				<TimeBasedTriggeringPolicy interval="1"/>
 				<SizeBasedTriggeringPolicy size="10 MB" />
 			</Policies>
-			<DefaultRolloverStrategy max="720" />
+			<DefaultRolloverStrategy max="7" />
 		</RollingRandomAccessFile>
 		<RollingRandomAccessFile name="err" fileName="logs/error.log"
 			filePattern="logs/error/%d{yyyy-MM-dd}-%i.log">
@@ -29,7 +29,7 @@
 				<TimeBasedTriggeringPolicy interval="1"/>
 				<SizeBasedTriggeringPolicy size="10 MB" />
 			</Policies>
-			<DefaultRolloverStrategy max="30" />
+			<DefaultRolloverStrategy max="7" />
 		</RollingRandomAccessFile>
 	</Appenders>
 	<Loggers>

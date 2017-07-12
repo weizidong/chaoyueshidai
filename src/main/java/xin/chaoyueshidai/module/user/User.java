@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import xin.chaoyueshidai.enums.Subscribe;
 
@@ -13,7 +13,7 @@ public class User implements Serializable {
 	private Integer id;
 
 	private Integer subscribe;
-	@JSONField(serialize = false)
+	@JsonIgnore
 	private String openid;
 
 	private String name;
@@ -37,7 +37,7 @@ public class User implements Serializable {
 	private Date created;
 
 	private String tel;
-	@JSONField(serialize = false)
+	@JsonIgnore
 	private String pwd;
 
 	public Integer getId() {
