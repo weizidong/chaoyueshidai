@@ -3,12 +3,15 @@
 <mapper namespace="xin.chaoyueshidai.module.example.ExampleMapper" >
   <resultMap id="BaseResultMap" type="xin.chaoyueshidai.module.example.Example" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="topic" property="topic" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="qrcode" property="qrcode" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="pic" property="pic" jdbcType="VARCHAR" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="userid" property="userid" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="xin.chaoyueshidai.module.example.Example" extends="BaseResultMap" >
     <result column="legend" property="legend" jdbcType="LONGVARCHAR" />
@@ -72,7 +75,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, topic, url, pic, created, userid, type
+    id, title, qrcode, url, pic, created, userid, type, start_time, end_time
   </sql>
   <sql id="Blob_Column_List" >
     legend
@@ -129,11 +132,13 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into example (topic, url, pic, 
-      created, userid, type, 
+    insert into example (title, qrcode, url, 
+      pic, created, userid, 
+      type, start_time, end_time, 
       legend)
-    values (#{topic,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, 
-      #{created,jdbcType=TIMESTAMP}, #{userid,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
+    values (#{title,jdbcType=VARCHAR}, #{qrcode,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{pic,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{userid,jdbcType=INTEGER}, 
+      #{type,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
       #{legend,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="xin.chaoyueshidai.module.example.Example" >
@@ -142,8 +147,11 @@
     </selectKey>
     insert into example
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="topic != null" >
-        topic,
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="qrcode != null" >
+        qrcode,
       </if>
       <if test="url != null" >
         url,
@@ -160,13 +168,22 @@
       <if test="type != null" >
         type,
       </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
       <if test="legend != null" >
         legend,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="topic != null" >
-        #{topic,jdbcType=VARCHAR},
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcode != null" >
+        #{qrcode,jdbcType=VARCHAR},
       </if>
       <if test="url != null" >
         #{url,jdbcType=VARCHAR},
@@ -182,6 +199,12 @@
       </if>
       <if test="type != null" >
         #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
       </if>
       <if test="legend != null" >
         #{legend,jdbcType=LONGVARCHAR},
@@ -200,8 +223,11 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.topic != null" >
-        topic = #{record.topic,jdbcType=VARCHAR},
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qrcode != null" >
+        qrcode = #{record.qrcode,jdbcType=VARCHAR},
       </if>
       <if test="record.url != null" >
         url = #{record.url,jdbcType=VARCHAR},
@@ -218,6 +244,12 @@
       <if test="record.type != null" >
         type = #{record.type,jdbcType=VARCHAR},
       </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.legend != null" >
         legend = #{record.legend,jdbcType=LONGVARCHAR},
       </if>
@@ -229,12 +261,15 @@
   <update id="updateByExampleWithBLOBs" parameterType="map" >
     update example
     set id = #{record.id,jdbcType=INTEGER},
-      topic = #{record.topic,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      qrcode = #{record.qrcode,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR},
       pic = #{record.pic,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       userid = #{record.userid,jdbcType=INTEGER},
       type = #{record.type,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
       legend = #{record.legend,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -243,12 +278,15 @@
   <update id="updateByExample" parameterType="map" >
     update example
     set id = #{record.id,jdbcType=INTEGER},
-      topic = #{record.topic,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      qrcode = #{record.qrcode,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR},
       pic = #{record.pic,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       userid = #{record.userid,jdbcType=INTEGER},
-      type = #{record.type,jdbcType=VARCHAR}
+      type = #{record.type,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -256,8 +294,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="xin.chaoyueshidai.module.example.Example" >
     update example
     <set >
-      <if test="topic != null" >
-        topic = #{topic,jdbcType=VARCHAR},
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcode != null" >
+        qrcode = #{qrcode,jdbcType=VARCHAR},
       </if>
       <if test="url != null" >
         url = #{url,jdbcType=VARCHAR},
@@ -274,6 +315,12 @@
       <if test="type != null" >
         type = #{type,jdbcType=VARCHAR},
       </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="legend != null" >
         legend = #{legend,jdbcType=LONGVARCHAR},
       </if>
@@ -282,23 +329,29 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="xin.chaoyueshidai.module.example.Example" >
     update example
-    set topic = #{topic,jdbcType=VARCHAR},
+    set title = #{title,jdbcType=VARCHAR},
+      qrcode = #{qrcode,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       pic = #{pic,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       userid = #{userid,jdbcType=INTEGER},
       type = #{type,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
       legend = #{legend,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="xin.chaoyueshidai.module.example.Example" >
     update example
-    set topic = #{topic,jdbcType=VARCHAR},
+    set title = #{title,jdbcType=VARCHAR},
+      qrcode = #{qrcode,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       pic = #{pic,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       userid = #{userid,jdbcType=INTEGER},
-      type = #{type,jdbcType=VARCHAR}
+      type = #{type,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

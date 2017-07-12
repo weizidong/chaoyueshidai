@@ -30,26 +30,33 @@ public class UserController {
 	// 获取当前登录
 	@RequestMapping("/mine")
 	@ResponseBody
-	public Object mine(HttpSession session) {
+	public User mine(HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
-			return WebException.error("用户未登录！");
+			throw WebException.error("用户未登录！");
 		}
 		user = userService.getById(user.getId());
 		session.setAttribute("user", user);
 		return user;
 	}
 
-	// // 登录
-	// @RequestMapping("/login")
-	// @ResponseBody
-	// public Object login(@BeanParam User u, HttpSession session) {
-	// User user = userService.login(u.getUsername(), u.getPwd());
-	// user.setPwd(null);
-	// session.setAttribute("user", user);
-	// return user;
-	// }
-	//
+	// 登录
+	@RequestMapping("/login")
+	@ResponseBody
+	public User login(@BeanParam User u, HttpSession session) {
+		User user = userService.login(u.getTel(), u.getPwd());
+		user.setPwd(null);
+		session.setAttribute("user", user);
+		return user;
+	}
+
+	// 注册
+	@RequestMapping("/register")
+	@ResponseBody
+	public void register(@BeanParam User u, HttpSession session) {
+		userService.save(u);
+	}
+	
 	// // 登录二维码
 	// @RequestMapping("/login_qrcode")
 	// @ResponseBody

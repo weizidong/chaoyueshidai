@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="xin.chaoyueshidai.module.note.Note" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="pic" property="pic" jdbcType="VARCHAR" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="userid" property="userid" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="VARCHAR" />
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, created, userid, type
+    id, title, pic, created, userid, type
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -127,10 +128,12 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into note (title, created, userid, 
-      type, content)
-    values (#{title,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{userid,jdbcType=INTEGER}, 
-      #{type,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+    insert into note (title, pic, created, 
+      userid, type, content
+      )
+    values (#{title,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{userid,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="xin.chaoyueshidai.module.note.Note" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -140,6 +143,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="title != null" >
         title,
+      </if>
+      <if test="pic != null" >
+        pic,
       </if>
       <if test="created != null" >
         created,
@@ -157,6 +163,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
       </if>
       <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},
@@ -187,6 +196,9 @@
       <if test="record.title != null" >
         title = #{record.title,jdbcType=VARCHAR},
       </if>
+      <if test="record.pic != null" >
+        pic = #{record.pic,jdbcType=VARCHAR},
+      </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
       </if>
@@ -208,6 +220,7 @@
     update note
     set id = #{record.id,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
+      pic = #{record.pic,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       userid = #{record.userid,jdbcType=INTEGER},
       type = #{record.type,jdbcType=VARCHAR},
@@ -220,6 +233,7 @@
     update note
     set id = #{record.id,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
+      pic = #{record.pic,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       userid = #{record.userid,jdbcType=INTEGER},
       type = #{record.type,jdbcType=VARCHAR}
@@ -232,6 +246,9 @@
     <set >
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        pic = #{pic,jdbcType=VARCHAR},
       </if>
       <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
@@ -251,6 +268,7 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="xin.chaoyueshidai.module.note.Note" >
     update note
     set title = #{title,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       userid = #{userid,jdbcType=INTEGER},
       type = #{type,jdbcType=VARCHAR},
@@ -260,6 +278,7 @@
   <update id="updateByPrimaryKey" parameterType="xin.chaoyueshidai.module.note.Note" >
     update note
     set title = #{title,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       userid = #{userid,jdbcType=INTEGER},
       type = #{type,jdbcType=VARCHAR}

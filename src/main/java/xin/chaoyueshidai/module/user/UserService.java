@@ -8,7 +8,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import xin.chaoyueshidai.dto.PageInfo;
+import xin.chaoyueshidai.dto.WebException;
 import xin.chaoyueshidai.param.PageParam;
+import xin.chaoyueshidai.utils.MD5Utils;
 
 // 用户业务
 @Service
@@ -17,9 +19,18 @@ public class UserService {
 	private UserMapper mapper;
 
 	// 登录
-	public User login(String username, String pwd) {
-		// TODO Auto-generated method stub
-		return null;
+	public User login(String tel, String pwd) {
+		UserExample e = new UserExample();
+		e.createCriteria().andTelEqualTo(tel);
+		List<User> list = mapper.selectByExample(e);
+		if (list == null || list.size() < 1) {
+			throw WebException.error("账号不存在！");
+		}
+		User u = list.get(0);
+		if (MD5Utils.verifyPassword(pwd, u.getPwd())) {
+			return u;
+		}
+		throw WebException.error("密码错误！");
 	}
 
 	// 修改密码
@@ -65,6 +76,8 @@ public class UserService {
 	// 保存
 	public void save(User u) {
 		u.setCreated(new Date());
+		u.setPwd(MD5Utils.getMD5ofStr(u.getPwd()));
+		u.setLoginTime(new Date());
 		mapper.insertSelective(u);
 	}
 

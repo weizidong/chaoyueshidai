@@ -1,13 +1,15 @@
 package xin.chaoyueshidai.module.example;
 
+import java.io.Serializable;
 import java.util.Date;
 
-import com.alibaba.fastjson.JSON;
-
-public class Example {
+@SuppressWarnings("serial")
+public class Example implements Serializable {
 	private Integer id;
 
-	private String topic;
+	private String title;
+
+	private String qrcode;
 
 	private String url;
 
@@ -19,6 +21,10 @@ public class Example {
 
 	private String type;
 
+	private Date startTime;
+
+	private Date endTime;
+
 	private String legend;
 
 	public Integer getId() {
@@ -29,12 +35,20 @@ public class Example {
 		this.id = id;
 	}
 
-	public String getTopic() {
-		return topic;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTopic(String topic) {
-		this.topic = topic == null ? null : topic.trim();
+	public void setTitle(String title) {
+		this.title = title == null ? null : title.trim();
+	}
+
+	public String getQrcode() {
+		return qrcode;
+	}
+
+	public void setQrcode(String qrcode) {
+		this.qrcode = qrcode == null ? null : qrcode.trim();
 	}
 
 	public String getUrl() {
@@ -77,6 +91,22 @@ public class Example {
 		this.type = type == null ? null : type.trim();
 	}
 
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
 	public String getLegend() {
 		return legend;
 	}
@@ -84,10 +114,4 @@ public class Example {
 	public void setLegend(String legend) {
 		this.legend = legend == null ? null : legend.trim();
 	}
-
-	@Override
-	public String toString() {
-		return JSON.toJSONString(this);
-	}
-
 }

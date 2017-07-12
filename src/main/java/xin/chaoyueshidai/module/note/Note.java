@@ -1,65 +1,85 @@
 package xin.chaoyueshidai.module.note;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Note {
-    private Integer id;
+import com.alibaba.fastjson.JSON;
 
-    private String title;
+@SuppressWarnings("serial")
+public class Note implements Serializable {
+	private Integer id;
 
-    private Date created;
+	private String title;
 
-    private Integer userid;
+	private String pic;
 
-    private String type;
+	private Date created;
 
-    private String content;
+	private Integer userid;
 
-    public Integer getId() {
-        return id;
-    }
+	private String type;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	private String content;
 
-    public String getTitle() {
-        return title;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public Date getCreated() {
-        return created;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
+	public void setTitle(String title) {
+		this.title = title == null ? null : title.trim();
+	}
 
-    public Integer getUserid() {
-        return userid;
-    }
+	public String getPic() {
+		return pic;
+	}
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
-    }
+	public void setPic(String pic) {
+		this.pic = pic == null ? null : pic.trim();
+	}
 
-    public String getType() {
-        return type;
-    }
+	public Date getCreated() {
+		return created;
+	}
 
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
-    }
+	public void setCreated(Date created) {
+		this.created = created;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public Integer getUserid() {
+		return userid;
+	}
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
+	public void setUserid(Integer userid) {
+		this.userid = userid;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type == null ? null : type.trim();
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content == null ? null : content.trim();
+	}
+
+	@Override
+	public String toString() {
+		return JSON.toJSONString(this);
+	}
+
 }

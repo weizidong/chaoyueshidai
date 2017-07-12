@@ -1,25 +1,32 @@
 package xin.chaoyueshidai.module.user;
 
+import java.io.Serializable;
 import java.util.Date;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.annotation.JSONField;
 
 import xin.chaoyueshidai.enums.Subscribe;
 
-public class User {
+@SuppressWarnings("serial")
+public class User implements Serializable {
 	private Integer id;
 
 	private Integer subscribe;
-
+	@JSONField(serialize = false)
 	private String openid;
 
 	private String name;
 
-	private String nickname;
+	private String nickName;
 
-	private Integer sex;
+	private Integer gender;
+
+	private String province;
 
 	private String city;
 
-	private String headimgurl;
+	private String avatarUrl;
 
 	private Date subscribeTime;
 
@@ -30,6 +37,8 @@ public class User {
 	private Date created;
 
 	private String tel;
+	@JSONField(serialize = false)
+	private String pwd;
 
 	public Integer getId() {
 		return id;
@@ -67,20 +76,28 @@ public class User {
 		this.name = name == null ? null : name.trim();
 	}
 
-	public String getNickname() {
-		return nickname;
+	public String getNickName() {
+		return nickName;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname == null ? null : nickname.trim();
+	public void setNickName(String nickName) {
+		this.nickName = nickName == null ? null : nickName.trim();
 	}
 
-	public Integer getSex() {
-		return sex;
+	public Integer getGender() {
+		return gender;
 	}
 
-	public void setSex(Integer sex) {
-		this.sex = sex;
+	public void setGender(Integer gender) {
+		this.gender = gender;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province == null ? null : province.trim();
 	}
 
 	public String getCity() {
@@ -91,12 +108,12 @@ public class User {
 		this.city = city == null ? null : city.trim();
 	}
 
-	public String getHeadimgurl() {
-		return headimgurl;
+	public String getAvatarUrl() {
+		return avatarUrl;
 	}
 
-	public void setHeadimgurl(String headimgurl) {
-		this.headimgurl = headimgurl == null ? null : headimgurl.trim();
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl == null ? null : avatarUrl.trim();
 	}
 
 	public Date getSubscribeTime() {
@@ -138,4 +155,18 @@ public class User {
 	public void setTel(String tel) {
 		this.tel = tel == null ? null : tel.trim();
 	}
+
+	public String getPwd() {
+		return pwd;
+	}
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd == null ? null : pwd.trim();
+	}
+
+	@Override
+	public String toString() {
+		return JSON.toJSONString(this);
+	}
+
 }

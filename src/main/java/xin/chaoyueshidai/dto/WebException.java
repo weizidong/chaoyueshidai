@@ -2,23 +2,30 @@ package xin.chaoyueshidai.dto;
 
 import com.alibaba.fastjson.JSON;
 
-public class WebException {
-	private Integer code;
+@SuppressWarnings("serial")
+public class WebException extends RuntimeException {
+	private int code;
 	private String msg;
 
 	public WebException() {
 	}
 
-	public WebException(Integer code, String msg) {
+	public WebException(int code, String msg, Throwable cause) {
+		super(msg, cause);
 		this.code = code;
 		this.msg = msg;
 	}
 
-	public Integer getCode() {
+	public WebException(int code, String msg) {
+		this.code = code;
+		this.msg = msg;
+	}
+
+	public int getCode() {
 		return code;
 	}
 
-	public void setCode(Integer code) {
+	public void setCode(int code) {
 		this.code = code;
 	}
 

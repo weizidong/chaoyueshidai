@@ -25,8 +25,8 @@ public class ExampleService {
 		Criteria c = e.createCriteria();
 		c.andUseridEqualTo(userid);
 		c.andTypeEqualTo(type);
-		if ("topic".equals(param.getFiled())) {
-			c.andTopicLike(param.getKeyWord().toString());
+		if ("title".equals(param.getFiled())) {
+			c.andTitleLike("%" + param.getKeyWord().toString() + "%");
 		}
 		e.setOrderByClause("id ASC");
 		PageInfo info = new PageInfo();

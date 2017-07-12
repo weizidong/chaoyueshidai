@@ -1,75 +1,85 @@
 package xin.chaoyueshidai.module.file;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Files {
-    private Integer id;
+import com.alibaba.fastjson.JSON;
 
-    private String name;
+@SuppressWarnings("serial")
+public class Files implements Serializable {
+	private Integer id;
 
-    private String suffix;
+	private String name;
 
-    private Long time;
+	private String suffix;
 
-    private String url;
+	private Long time;
 
-    private String des;
+	private String url;
 
-    private Date created;
+	private String des;
 
-    public Integer getId() {
-        return id;
-    }
+	private Date created;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getSuffix() {
-        return suffix;
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public void setSuffix(String suffix) {
-        this.suffix = suffix == null ? null : suffix.trim();
-    }
+	public String getSuffix() {
+		return suffix;
+	}
 
-    public Long getTime() {
-        return time;
-    }
+	public void setSuffix(String suffix) {
+		this.suffix = suffix == null ? null : suffix.trim();
+	}
 
-    public void setTime(Long time) {
-        this.time = time;
-    }
+	public Long getTime() {
+		return time;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public void setTime(Long time) {
+		this.time = time;
+	}
 
-    public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public String getDes() {
-        return des;
-    }
+	public void setUrl(String url) {
+		this.url = url == null ? null : url.trim();
+	}
 
-    public void setDes(String des) {
-        this.des = des == null ? null : des.trim();
-    }
+	public String getDes() {
+		return des;
+	}
 
-    public Date getCreated() {
-        return created;
-    }
+	public void setDes(String des) {
+		this.des = des == null ? null : des.trim();
+	}
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	@Override
+	public String toString() {
+		return JSON.toJSONString(this);
+	}
+
 }
