@@ -20,14 +20,14 @@ public class FileService {
 	/**
 	 * 获取列表
 	 */
-	public PageInfo find(PageParam param) {
+	public PageInfo<Files> find(PageParam param) {
 		FilesExample e = new FilesExample();
 		Criteria c = e.createCriteria();
 		if ("name".equals(param.getFiled())) {
 			c.andNameLike(param.getKeyWord().toString());
 		}
 		e.setOrderByClause("id ASC");
-		PageInfo info = new PageInfo();
+		PageInfo<Files> info = new PageInfo<Files>();
 		if (param.getPageSize() != null && param.getPageSize() > 0) {
 			int all = mapper.countByExample(e);
 			info.setPageSize(param.getPageSize());

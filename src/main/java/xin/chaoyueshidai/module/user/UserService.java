@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import xin.chaoyueshidai.dto.PageInfo;
 import xin.chaoyueshidai.dto.RestResponse;
-import xin.chaoyueshidai.dto.WebException;
 import xin.chaoyueshidai.param.PageParam;
 import xin.chaoyueshidai.utils.MD5Utils;
 
@@ -36,17 +35,18 @@ public class UserService {
 	}
 
 	// 修改密码
-	public void changePwd(Integer id, String old, String pwd) {
+	public RestResponse changePwd(Integer id, String old, String pwd) {
 		User u = mapper.selectByPrimaryKey(id);
 		if (!MD5Utils.verifyPassword(old, u.getPwd())) {
-			throw WebException.error("原密码错误！");
+			return RestResponse.error("原密码错误！");
 		}
 		u.setPwd(MD5Utils.getMD5ofStr(pwd));
 		mapper.updateByPrimaryKeySelective(u);
+		return RestResponse.success("密码修改成功，请重新登录！");
 	}
 
 	// 查询列表
-	public PageInfo find(PageParam param) {
+	public PageInfo<User> find(PageParam param) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -90,5 +90,12 @@ public class UserService {
 	// 更新
 	public void update(User u) {
 		mapper.updateByPrimaryKeySelective(u);
+	}
+
+	// 批量获取用户
+	public List<User> findList(List<Integer> ids) {
+		UserExample e = new UserExample();
+		e.createCriteria().andIdIn(ids);
+		return mapper.selectByExample(e);
 	}
 }

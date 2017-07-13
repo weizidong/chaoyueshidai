@@ -494,6 +494,66 @@ public class NoteExample {
             addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
+
+        public Criteria andShareIsNull() {
+            addCriterion("share is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareIsNotNull() {
+            addCriterion("share is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareEqualTo(Integer value) {
+            addCriterion("share =", value, "share");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareNotEqualTo(Integer value) {
+            addCriterion("share <>", value, "share");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareGreaterThan(Integer value) {
+            addCriterion("share >", value, "share");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareGreaterThanOrEqualTo(Integer value) {
+            addCriterion("share >=", value, "share");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareLessThan(Integer value) {
+            addCriterion("share <", value, "share");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareLessThanOrEqualTo(Integer value) {
+            addCriterion("share <=", value, "share");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareIn(List<Integer> values) {
+            addCriterion("share in", values, "share");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareNotIn(List<Integer> values) {
+            addCriterion("share not in", values, "share");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareBetween(Integer value1, Integer value2) {
+            addCriterion("share between", value1, value2, "share");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareNotBetween(Integer value1, Integer value2) {
+            addCriterion("share not between", value1, value2, "share");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

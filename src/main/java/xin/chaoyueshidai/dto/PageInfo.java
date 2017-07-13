@@ -1,6 +1,7 @@
 package xin.chaoyueshidai.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.alibaba.fastjson.JSON;
 
@@ -11,13 +12,13 @@ import com.alibaba.fastjson.JSON;
  *
  */
 @SuppressWarnings("serial")
-public class PageInfo implements Serializable {
+public class PageInfo<T> implements Serializable {
 	private Integer all;// 总记录
 	private Integer page;// 当前页数
 	private Integer pageSize;// 每页记录数
 	private Integer start;// 开始记录
 	private Integer end;// 结束记录
-	private Object list;// 数据
+	private List<T> list;// 数据
 
 	public Integer getStart() {
 		return start;
@@ -64,11 +65,11 @@ public class PageInfo implements Serializable {
 		this.pageSize = pageSize;
 	}
 
-	public Object getList() {
+	public List<T> getList() {
 		return list;
 	}
 
-	public void setList(Object list) {
+	public void setList(List<T> list) {
 		this.list = list;
 	}
 

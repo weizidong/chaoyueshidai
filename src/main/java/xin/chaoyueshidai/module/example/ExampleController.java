@@ -24,14 +24,14 @@ public class ExampleController {
 	// 获取列表
 	@RequestMapping(value = "/find/{type}/{userid}", method = RequestMethod.POST)
 	@ResponseBody
-	public PageInfo find(@RequestBody PageParam param, @PathVariable String type, @PathVariable Integer userid,
+	public PageInfo<Example> find(@RequestBody PageParam param, @PathVariable String type, @PathVariable Integer userid,
 			HttpSession session) {
 		if (userid != null && userid == -1) {
 			User user = (User) session.getAttribute("user");
 			userid = user.getId();
 		}
 		if (userid == null) {
-			return new PageInfo();
+			return new PageInfo<Example>();
 		}
 		return exampleService.find(userid, type, param);
 	}

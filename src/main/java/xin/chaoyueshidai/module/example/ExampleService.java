@@ -20,7 +20,7 @@ public class ExampleService {
 	/**
 	 * 获取列表
 	 */
-	public PageInfo find(Integer userid, String type, PageParam param) {
+	public PageInfo<Example> find(Integer userid, String type, PageParam param) {
 		ExampleExample e = new ExampleExample();
 		Criteria c = e.createCriteria();
 		c.andUseridEqualTo(userid);
@@ -29,7 +29,7 @@ public class ExampleService {
 			c.andTitleLike("%" + param.getKeyWord().toString() + "%");
 		}
 		e.setOrderByClause("id ASC");
-		PageInfo info = new PageInfo();
+		PageInfo<Example> info = new PageInfo<Example>();
 		if (param.getPageSize() != null && param.getPageSize() > 0) {
 			int all = mapper.countByExample(e);
 			info.setPageSize(param.getPageSize());

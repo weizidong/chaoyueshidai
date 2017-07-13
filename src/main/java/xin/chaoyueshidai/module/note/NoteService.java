@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import xin.chaoyueshidai.dto.PageInfo;
@@ -20,16 +21,23 @@ public class NoteService {
 	/**
 	 * 获取列表
 	 */
-	public PageInfo find(Integer userid, String type, PageParam param) {
+	public PageInfo<Note> find(Integer userid, String type, PageParam param) {
 		NoteExample e = new NoteExample();
 		Criteria c = e.createCriteria();
-		c.andUseridEqualTo(userid);
-		c.andTypeEqualTo(type);
-		if ("title".equals(param.getFiled())) {
-			c.andTitleLike(param.getKeyWord().toString());
+		if (userid != null && userid == 0) {
+			c.andShareEqualTo(1);
+		}
+		if (userid != null && userid > 0) {
+			c.andUseridEqualTo(userid);
+		}
+		if (type != null && !StringUtils.equals(type, "0")) {
+			c.andTypeEqualTo(type);
+		}
+		if (StringUtils.equalsIgnoreCase(param.getFiled(), "title")) {
+			c.andTitleLike("%" + param.getKeyWord().toString() + "%");
 		}
 		e.setOrderByClause("id ASC");
-		PageInfo info = new PageInfo();
+		PageInfo<Note> info = new PageInfo<Note>();
 		if (param.getPageSize() != null && param.getPageSize() > 0) {
 			int all = mapper.countByExample(e);
 			info.setPageSize(param.getPageSize());
@@ -52,9 +60,8 @@ public class NoteService {
 	/**
 	 * 保存
 	 */
-	public void save(Integer userid, String type, Note e) {
+	public void save(Integer userid, Note e) {
 		e.setUserid(userid);
-		e.setType(type);
 		e.setCreated(new Date());
 		mapper.insertSelective(e);
 	}

@@ -2,12 +2,12 @@ package xin.chaoyueshidai.module.user;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.BeanParam;
 import javax.ws.rs.FormParam;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,6 +45,16 @@ public class UserController {
 		return user;
 	}
 
+	// 获取当前登录
+	@RequestMapping("/get/{id}")
+	@ResponseBody
+	public User get(@PathVariable Integer id) {
+		User user = userService.getById(id);
+		user.setOpenid(null);
+		user.setPwd(null);
+		return user;
+	}
+
 	// 登录
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
@@ -59,7 +69,7 @@ public class UserController {
 	// 注册
 	@RequestMapping("/register")
 	@ResponseBody
-	public void register(@BeanParam User u, HttpSession session) {
+	public void register(@RequestBody User u) {
 		userService.save(u);
 	}
 
@@ -83,11 +93,28 @@ public class UserController {
 	// 修改密码
 	@RequestMapping("/changePwd")
 	@ResponseBody
-	public WebException changePwd(@FormParam("pwd") String pwd, @FormParam("old") String old, HttpSession session) {
+	public RestResponse changePwd(@FormParam("pwd") String pwd, @FormParam("old") String old, HttpSession session) {
 		User u = (User) session.getAttribute("user");
-		userService.changePwd(u.getId(), old, pwd);
+		RestResponse rest = userService.changePwd(u.getId(), old, pwd);
 		session.removeAttribute("user");
-		return WebException.success("密码修改成功，请重新登录！");
+		return rest;
+	}
+
+	// 修改我的资料
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	@ResponseBody
+	public RestResponse update(@RequestBody String data, HttpSession session) {
+		User user = JSON.parseObject(data, User.class);
+		log.debug("参数：" + user);
+		User u = (User) session.getAttribute("user");
+		if (u == null || u.getId() == null) {
+			return RestResponse.error("用户没有登陆！");
+		}
+		user.setId(u.getId());
+		userService.update(user);
+		u = userService.getById(user.getId());
+		session.setAttribute("user", u);
+		return RestResponse.success("修改成功！");
 	}
 
 }

@@ -66,6 +66,10 @@ public class RestResponse {
 		return new RestResponse(200, "成功", data);
 	}
 
+	public static RestResponse success(String msg) {
+		return new RestResponse(200, msg);
+	}
+
 	@Override
 	public String toString() {
 		return JSON.toJSONString(this);

@@ -3,6 +3,8 @@ package xin.chaoyueshidai.module.note;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Transient;
+
 import com.alibaba.fastjson.JSON;
 
 @SuppressWarnings("serial")
@@ -16,10 +18,32 @@ public class Note implements Serializable {
 	private Date created;
 
 	private Integer userid;
+	@Transient
+	private String userName;
+	@Transient
+	private String avatarUrl;
 
 	private String type;
 
+	private Integer share;
+
 	private String content;
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getAvatarUrl() {
+		return avatarUrl;
+	}
+
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
+	}
 
 	public Integer getId() {
 		return id;
@@ -67,6 +91,14 @@ public class Note implements Serializable {
 
 	public void setType(String type) {
 		this.type = type == null ? null : type.trim();
+	}
+
+	public Integer getShare() {
+		return share;
+	}
+
+	public void setShare(Integer share) {
+		this.share = share;
 	}
 
 	public String getContent() {

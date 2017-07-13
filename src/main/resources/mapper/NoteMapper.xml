@@ -8,6 +8,7 @@
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="userid" property="userid" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="share" property="share" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="xin.chaoyueshidai.module.note.Note" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, pic, created, userid, type
+    id, title, pic, created, userid, type, share
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -129,11 +130,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into note (title, pic, created, 
-      userid, type, content
-      )
+      userid, type, share, 
+      content)
     values (#{title,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
-      #{userid,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
-      )
+      #{userid,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{share,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="xin.chaoyueshidai.module.note.Note" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -156,6 +157,9 @@
       <if test="type != null" >
         type,
       </if>
+      <if test="share != null" >
+        share,
+      </if>
       <if test="content != null" >
         content,
       </if>
@@ -175,6 +179,9 @@
       </if>
       <if test="type != null" >
         #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="share != null" >
+        #{share,jdbcType=INTEGER},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
@@ -208,6 +215,9 @@
       <if test="record.type != null" >
         type = #{record.type,jdbcType=VARCHAR},
       </if>
+      <if test="record.share != null" >
+        share = #{record.share,jdbcType=INTEGER},
+      </if>
       <if test="record.content != null" >
         content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
@@ -224,6 +234,7 @@
       created = #{record.created,jdbcType=TIMESTAMP},
       userid = #{record.userid,jdbcType=INTEGER},
       type = #{record.type,jdbcType=VARCHAR},
+      share = #{record.share,jdbcType=INTEGER},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -236,7 +247,8 @@
       pic = #{record.pic,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       userid = #{record.userid,jdbcType=INTEGER},
-      type = #{record.type,jdbcType=VARCHAR}
+      type = #{record.type,jdbcType=VARCHAR},
+      share = #{record.share,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -259,6 +271,9 @@
       <if test="type != null" >
         type = #{type,jdbcType=VARCHAR},
       </if>
+      <if test="share != null" >
+        share = #{share,jdbcType=INTEGER},
+      </if>
       <if test="content != null" >
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -272,6 +287,7 @@
       created = #{created,jdbcType=TIMESTAMP},
       userid = #{userid,jdbcType=INTEGER},
       type = #{type,jdbcType=VARCHAR},
+      share = #{share,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -281,7 +297,8 @@
       pic = #{pic,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       userid = #{userid,jdbcType=INTEGER},
-      type = #{type,jdbcType=VARCHAR}
+      type = #{type,jdbcType=VARCHAR},
+      share = #{share,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
