@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import xin.chaoyueshidai.dto.PageInfo;
@@ -80,11 +81,21 @@ public class UserService {
 	}
 
 	// 保存
-	public void save(User u) {
+	public RestResponse save(User u) {
+		if (StringUtils.isBlank(u.getTel())) {
+			return RestResponse.error("未填写电话号码！");
+		}
+		UserExample e = new UserExample();
+		e.createCriteria().andTelEqualTo(u.getTel());
+		List<User> db = mapper.selectByExample(e);
+		if (db != null && db.size() > 0) {
+			return RestResponse.error("该电话号码已被注册！");
+		}
 		u.setCreated(new Date());
 		u.setPwd(MD5Utils.getMD5ofStr(u.getPwd()));
 		u.setLoginTime(new Date());
 		mapper.insertSelective(u);
+		return RestResponse.success("注册成功！请登录...");
 	}
 
 	// 更新

@@ -92,16 +92,17 @@ public class Event {
 	// 关注事件
 	private String subscribe(WechatMsg msg) {
 		User u = userService.getByOpenId(msg.getFromUserName());
-		ARTICLE a1 = new ARTICLE("操作说明", "订阅号操作说明", Configs.hostname + "/rest/user/dyh/update/"+msg.getFromUserName(),
-				Configs.hostname + "/static/img/me.png");
+		ARTICLE a1 = new ARTICLE("操作说明", "发送以下指令进行操作：\n1、说明，2、笔记，3、我",
+				Configs.hostname + "/rest/info/" + msg.getFromUserName(), Configs.hostname + "/static/img/info.png");
 		if (u == null) {
 			u = new User();
 			u.setOpenid(msg.getFromUserName());
 			u.setSubscribe(Subscribe.已关注);
 			u.setSubscribeTime(new Date());
 			userService.save(u);
-			ARTICLE a2 = new ARTICLE("完善资料", "亲爱的用户，欢迎你，请完善资料!以便提供后续的服务！", Configs.hostname + "/rest/user/dyh/update/"+msg.getFromUserName(),
-					Configs.hostname + "/static/img/me.png");
+			ARTICLE a2 = new ARTICLE("完善资料", "亲爱的用户，欢迎你，请完善资料!以便提供后续的服务！",
+					Configs.hostname + "/rest/user/sj/" + msg.getFromUserName(),
+					Configs.hostname + "/static/img/mine.png");
 			return XmlResp.buildNews(msg.getFromUserName(), msg.getToUserName(), Arrays.asList(a1, a2));
 		} else {
 			u.setSubscribe(Subscribe.已关注);

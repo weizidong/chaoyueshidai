@@ -26,12 +26,16 @@ public class WxMsgReceiver {
 	public String text(WechatMsg msg) {
 		ARTICLE a = null;
 		// TODO 文本消息回复
-		if (StringUtils.equalsIgnoreCase(msg.getContent(), EventKey.RSS)) {
-			a = new ARTICLE("RSS订阅", "公众号操作说明", Configs.hostname + "/rest/rss", Configs.hostname + "");
+		if (StringUtils.equalsIgnoreCase(msg.getContent(), EventKey.INFO)) {
+			a = new ARTICLE("操作说明", "发送以下指令进行操作：\n1、说明，2、笔记，3、我",
+					Configs.hostname + "/rest/info/" + msg.getFromUserName(),
+					Configs.hostname + "/static/img/info.png");
 		} else if (StringUtils.equalsIgnoreCase(msg.getContent(), EventKey.NOTE)) {
-			a = new ARTICLE("笔记记录", "公众号操作说明", Configs.hostname + "", Configs.hostname + "");
+			a = new ARTICLE("笔记记录", "进入使用笔记应用...", Configs.hostname + "/rest/note/sj/" + msg.getFromUserName(),
+					Configs.hostname + "/static/img/note.png");
 		} else if (StringUtils.equalsIgnoreCase(msg.getContent(), EventKey.ME)) {
-			a = new ARTICLE("我的信息", "公众号操作说明", Configs.hostname + "", Configs.hostname + "");
+			a = new ARTICLE("我的信息", "查看、编辑我的信息...", Configs.hostname + "/rest/user/sj/" + msg.getFromUserName(),
+					Configs.hostname + "/static/img/mine.png");
 		}
 		if (a != null) {
 			return XmlResp.buildNews(msg.getFromUserName(), msg.getToUserName(), Arrays.asList(a));

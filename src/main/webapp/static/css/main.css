@@ -1,5 +1,5 @@
-.header{top:0;height:70px;background:rgba(255,0,0,0.73);}
-.page{top:70px;bottom:70px;min-width:1300px;text-align:center;}
+.header{top:0;height:70px;background:rgba(0,0,0,0.3);}
+.page{top:70px;bottom:70px;}
 .footer{bottom:0;height:70px;}
 .footer,.header,.page{position:fixed;left:0;right:0;}
 

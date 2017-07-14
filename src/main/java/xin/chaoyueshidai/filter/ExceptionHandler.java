@@ -29,9 +29,6 @@ public class ExceptionHandler extends SimpleMappingExceptionResolver {
 	protected ModelAndView doResolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
 			Exception ex) {
 		ModelAndView modelAndView = super.doResolveException(request, response, handler, ex);
-		String url = request.getServletPath();
-		String query = request.getQueryString();
-		log.debug("请求：" + url + (query != null ? ("?" + query) : ""));
 		try {
 			log.error("参数：" + StreamUtils.copyToString(request.getInputStream(), Charset.defaultCharset()));
 		} catch (IOException e1) {
