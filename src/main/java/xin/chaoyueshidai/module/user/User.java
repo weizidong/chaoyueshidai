@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import xin.chaoyueshidai.enums.Subscribe;
+import xin.chaoyueshidai.utils.Configs;
 
 @SuppressWarnings("serial")
 public class User implements Serializable {
@@ -109,7 +110,13 @@ public class User implements Serializable {
 	}
 
 	public String getAvatarUrl() {
-		return avatarUrl;
+		if (avatarUrl == null) {
+			return null;
+		}
+		if (avatarUrl.startsWith("http://") || avatarUrl.startsWith("https://")) {
+			return avatarUrl;
+		}
+		return Configs.hostname + avatarUrl;
 	}
 
 	public void setAvatarUrl(String avatarUrl) {

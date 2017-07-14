@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 我的数据库
+Source Server         : 本地数据库
 Source Server Version : 50718
-Source Host           : 47.94.13.79:3309
+Source Host           : localhost:3306
 Source Database       : chaoyueshidai
 
 Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-07-12 11:37:50
+Date: 2017-07-13 19:04:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -51,11 +51,15 @@ CREATE TABLE `files` (
   `des` varchar(255) DEFAULT NULL COMMENT '文件说明',
   `created` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '上传时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of files
 -- ----------------------------
+INSERT INTO `files` VALUES ('1', 'me', 'png', '27', '/userfiles/2017/07/13/d93989dbf32b4dd2b54da4cea50157d3.png', null, '2017-07-13 13:16:59');
+INSERT INTO `files` VALUES ('2', 'qrcode', 'jpg', '8', '/userfiles/2017/07/13/64f346f2c9464e4c8892855e5f658ea5.jpg', null, '2017-07-13 14:39:17');
+INSERT INTO `files` VALUES ('3', 'qrcode', 'jpg', '6', '/userfiles/2017/07/13/600b574cb7bf419ab0dd7ebe063cf121.jpg', null, '2017-07-13 14:50:39');
+INSERT INTO `files` VALUES ('4', 'me', 'png', '7', '/userfiles/2017/07/13/ebf2b20824d64c2d9199819a552321e6.png', null, '2017-07-13 15:05:49');
 
 -- ----------------------------
 -- Table structure for note
@@ -69,12 +73,14 @@ CREATE TABLE `note` (
   `created` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `userid` int(11) DEFAULT NULL COMMENT '用户Id',
   `type` varchar(20) DEFAULT NULL COMMENT '笔记类型',
+  `share` int(1) DEFAULT '0' COMMENT '是否公开',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of note
 -- ----------------------------
+INSERT INTO `note` VALUES ('2', 'me', '/userfiles/2017/07/13/ebf2b20824d64c2d9199819a552321e6.png', '哈哈哈哈', '2017-07-13 16:30:33', '1', '2', '1');
 
 -- ----------------------------
 -- Table structure for user
@@ -95,10 +101,11 @@ CREATE TABLE `user` (
   `login_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最后一次登录时间',
   `created` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `tel` varchar(20) DEFAULT NULL COMMENT '手机',
+  `pwd` char(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', 'oejSSwDJnyK3JFT2GqJd4YNPzvIQ', null, null, '0', null, null, null, '2017-07-12 11:06:47', '0', '2017-07-12 11:06:47', '2017-07-12 11:06:47', null);
+INSERT INTO `user` VALUES ('1', '1', 'oejSSwDJnyK3JFT2GqJd4YNPzvIQ', '魏自东', '老魏', '1', '重庆', '重庆', '/userfiles/2017/07/13/600b574cb7bf419ab0dd7ebe063cf121.jpg', '2017-07-12 18:20:50', '0', '2017-07-12 18:20:50', '2017-07-12 18:20:50', '13541305583', '974f7b5e9f70ed6044185c096b356f7e');

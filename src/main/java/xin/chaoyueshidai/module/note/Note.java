@@ -7,6 +7,8 @@ import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSON;
 
+import xin.chaoyueshidai.utils.Configs;
+
 @SuppressWarnings("serial")
 public class Note implements Serializable {
 	private Integer id;
@@ -38,7 +40,13 @@ public class Note implements Serializable {
 	}
 
 	public String getAvatarUrl() {
-		return avatarUrl;
+		if (avatarUrl == null) {
+			return null;
+		}
+		if (avatarUrl.startsWith("http://") || avatarUrl.startsWith("https://")) {
+			return avatarUrl;
+		}
+		return Configs.hostname + avatarUrl;
 	}
 
 	public void setAvatarUrl(String avatarUrl) {
@@ -62,7 +70,13 @@ public class Note implements Serializable {
 	}
 
 	public String getPic() {
-		return pic;
+		if (pic == null) {
+			return null;
+		}
+		if (pic.startsWith("http://") || pic.startsWith("https://")) {
+			return pic;
+		}
+		return Configs.hostname + pic;
 	}
 
 	public void setPic(String pic) {

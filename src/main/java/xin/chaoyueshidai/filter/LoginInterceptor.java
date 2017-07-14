@@ -15,8 +15,6 @@ import xin.chaoyueshidai.module.user.UserService;
 
 public class LoginInterceptor implements HandlerInterceptor {
 	private static final Logger log = LogManager.getLogger(LoginInterceptor.class);
-	// 不拦截 "/login" 请求
-	private static final String[] IGNORE_URI = { "/rest/user/login" };
 	@Autowired
 	private UserService userService;
 
@@ -37,7 +35,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		// flag 表示是否登录
-		boolean flag = false;
+		boolean flag = true;
 		// 记录访问时间
 		HttpSession session = request.getSession();
 		session.setAttribute("start", System.currentTimeMillis());
@@ -47,7 +45,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		log.debug("请求：" + url + (query != null ? ("?" + query) : ""));
 		// 微信请求不校验
 		if (url.startsWith("/rest/wechat/")) {
-			return !flag;
+			return flag;
 		}
 		User user = (User) session.getAttribute("user");
 		// 开启debug模式
@@ -58,7 +56,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 				user = userService.getByOpenId("oejSSwDJnyK3JFT2GqJd4YNPzvIQ");
 				session.setAttribute("user", user);
 			}
-			return !flag;
+			return flag;
 		}
 		// 判断是否来自微信请求回调
 		// String code = request.getParameter("code");
@@ -93,26 +91,16 @@ public class LoginInterceptor implements HandlerInterceptor {
 			log.debug("订阅号openId：" + openId);
 			user = userService.getByOpenId(openId);
 			if (user == null) {
-				return flag;
+				return !flag;
 			}
 			session.setAttribute("user", user);
-			return !flag;
+			return flag;
 		}
 		// 判断是否登录
-		for (String s : IGNORE_URI) {
-			if (url.equals("/") || url.contains(s)) {
-				flag = true;
-				break;
-			}
-		}
-		if (!flag) {
-			// 获取 Session 并判断是否登录
-			if (user == null) {
-				// 如果未登录，进行拦截，跳转到登录界面
-				request.getRequestDispatcher("/rest/user/login").forward(request, response);
-			} else {
-				flag = true;
-			}
+		if (url.contains("/sj/") && user == null) {
+			// 如果未登录，进行拦截，跳转到登录界面
+			request.getRequestDispatcher("/rest/user/login").forward(request, response);
+			return !flag;
 		}
 		return flag;
 	}

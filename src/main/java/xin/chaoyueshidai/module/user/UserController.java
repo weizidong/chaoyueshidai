@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 
 import xin.chaoyueshidai.dto.RestResponse;
-import xin.chaoyueshidai.dto.WebException;
 
 // 用户请求
 @Controller
@@ -35,14 +34,14 @@ public class UserController {
 	// 获取当前登录
 	@RequestMapping("/mine")
 	@ResponseBody
-	public User mine(HttpSession session) {
+	public RestResponse mine(HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
-			throw WebException.error("用户未登录！");
+			return RestResponse.error("用户未登录！");
 		}
 		user = userService.getById(user.getId());
 		session.setAttribute("user", user);
-		return user;
+		return RestResponse.success(user);
 	}
 
 	// 获取当前登录
