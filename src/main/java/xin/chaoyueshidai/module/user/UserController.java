@@ -26,8 +26,11 @@ public class UserController {
 	private UserService userService;
 
 	// 修改我的资料
-	@RequestMapping("/dyh/update/{openId}")
-	public String updateDyh(HttpSession session) {
+	@RequestMapping("/mine/{openid}")
+	public String mine(@PathVariable String openid, HttpSession session) {
+		log.debug("订阅号openId：" + openid);
+		User user = userService.getByOpenId(openid);
+		session.setAttribute("user", user);
 		return "user/update";
 	}
 

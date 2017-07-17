@@ -34,7 +34,7 @@ public class WxMsgReceiver {
 			a = new ARTICLE("笔记记录", "进入使用笔记应用...", Configs.hostname + "/rest/note/sj/" + msg.getFromUserName(),
 					Configs.hostname + "/static/img/note.png");
 		} else if (StringUtils.equalsIgnoreCase(msg.getContent(), EventKey.ME)) {
-			a = new ARTICLE("我的信息", "查看、编辑我的信息...", Configs.hostname + "/rest/user/sj/" + msg.getFromUserName(),
+			a = new ARTICLE("我的资料", "查看、编辑我的资料...", Configs.hostname + "/rest/user/mine/" + msg.getFromUserName(),
 					Configs.hostname + "/static/img/mine.png");
 		}
 		if (a != null) {
