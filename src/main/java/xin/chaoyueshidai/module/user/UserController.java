@@ -2,7 +2,6 @@ package xin.chaoyueshidai.module.user;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.BeanParam;
 import javax.ws.rs.FormParam;
 
 import org.apache.logging.log4j.LogManager;
@@ -76,10 +75,12 @@ public class UserController {
 	}
 
 	// 绑定
-	@RequestMapping("/sjUpdate")
-	public String sjUpdate(@BeanParam User u) {
-		userService.save(u);
-		return "system/info";
+	@RequestMapping("/bind")
+	@ResponseBody
+	public RestResponse bind(@RequestBody String data) {
+		User u = JSON.parseObject(data, User.class);
+		log.debug("参数：" + u);
+		return userService.bind(u);
 	}
 
 	// // 登录二维码

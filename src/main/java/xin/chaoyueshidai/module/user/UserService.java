@@ -109,4 +109,25 @@ public class UserService {
 		e.createCriteria().andIdIn(ids);
 		return mapper.selectByExample(e);
 	}
+
+	// 绑定
+	public RestResponse bind(User u) {
+		if (StringUtils.isBlank(u.getTel())) {
+			return RestResponse.error("未填写电话号码！");
+		}
+		UserExample e = new UserExample();
+		e.createCriteria().andTelEqualTo(u.getTel());
+		List<User> db = mapper.selectByExample(e);
+		if (db == null || db.size() == 0) {
+			return RestResponse.error("该电话号码未注册！");
+		}
+		User dbu = db.get(0);
+		if (!StringUtils.equalsIgnoreCase(dbu.getPwd(), MD5Utils.getMD5ofStr(u.getPwd()))) {
+			return RestResponse.error("密码错误！");
+		}
+		dbu.setOpenid(u.getOpenid());
+		dbu.setName(u.getName());
+		mapper.updateByPrimaryKeySelective(dbu);
+		return RestResponse.success("绑定成功！");
+	}
 }
