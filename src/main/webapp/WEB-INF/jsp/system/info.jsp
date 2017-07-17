@@ -5,7 +5,7 @@
 <html lang="zh-CN">
 <%@include file="../common/head.jsp"%>
 <body>
-	<div class="page container-fluid" style="top: 0; bottom: 0;">
+	<div class="page container-fluid">
 		<%@include file="../common/msg2.jsp"%>
 		<div class="page-header">
 			<h1 class="text-center">操作说明</h1>
@@ -52,7 +52,7 @@
 					<h4 class="modal-title">注册用户</h4>
 				</div>
 				<div class="modal-body">
-					<form id="form" action="/rest/user/register" method="post">
+					<form action="/rest/user/register" method="post">
 						<input name="openid" id="openid" style="visibility: hidden;"
 							value="${requestScope.openid}">
 						<div class="form-group" id="tel">
@@ -84,7 +84,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery.md5.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jweixin-1.2.0.js"></script>
 <script type="text/javascript">
-	setTitle('操作手册');
+	setTitle('操作说明');
 	setCheck([ 'tel', 'name', 'pwd' ]);
 	// 显示弹出层
 	function showModel(update) {
@@ -102,11 +102,11 @@
 		showModel(false);
 	});
 	// 提交验证
-	$('#form').submit(function() {
+	$('#registerModal form').submit(function() {
 		if (check('tel') || check('name') || check('pwd')) {
-			var data = serialize('#form');
-			data.pwd = $.md5(data.md5);
-			ajax($('#form').attr('action'), data, function(data) {
+			var data = serialize('#registerModal form');
+			data.pwd = $.md5(data.pwd);
+			ajax($('#registerModal form').attr('action'), data, function(data) {
 				$('#registerModal').modal('hide');
 				sucessMsg(data.msg);
 			}, function(e) {

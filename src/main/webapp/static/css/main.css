@@ -1,12 +1,2 @@
-.header{top:0;height:70px;background:rgba(0,0,0,0.3);}
-.page{top:70px;bottom:70px;}
-.footer{bottom:0;height:70px;}
-.footer,.header,.page{position:fixed;left:0;right:0;}
-
-.header.title{}
-th{text-align:center;}
-td{vertical-align:middle !important;}
-.pointer,a{cursor:pointer;}
-.text_right{text-align:right;}
-.login-form{width:50%;margin-left:25%;margin-top:10%;}
-.alert{position:absolute;width:50%;top:20px;left:25%;}
+.page{position:fixed;left:0;right:0;height:100%;padding:15px;overflow-y:scroll;}
+.alert{position:absolute;top:20px;left: 15px;right: 15px;}
