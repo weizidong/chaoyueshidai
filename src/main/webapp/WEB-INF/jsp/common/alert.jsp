@@ -2,7 +2,7 @@
 <div id="msgBox">
 </div>
 <script type="text/javascript">
-function _alert(html,type) {
+function _alert(html,type) { // type : success, info, warning, danger
 	var msg = $('<div class="alert alert-info alert-dismissible fade in"role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 	msg.append(html);
 	$('#msgBox').html(msg);

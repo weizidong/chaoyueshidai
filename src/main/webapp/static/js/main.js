@@ -19,21 +19,24 @@ function setCheck(ids){
 	});
 }
 function ajax(url,data,success,error) {
+	loading && loading(true);
 	$.ajax({
-	   url: '/rest/user/register',
+	   url: url,
 	   type:'POST',
 	   contentType:'application/json;charset=UTF-8',
 	   processData:false,
 	   data: JSON.stringify(data),
 	   success: function(data){
+		   loading && loading(false);
 		   if(data.code == 500){
-			   error && error(data)
+			   error && error(data);
 		   }else{
 			   success && success(data.data || data); 
 		   }
        },
        error: function (e) {
-    	   error && error(e)
+    	   loading && loading(false);
+    	   error && error(e);
        }
 	 });
 }

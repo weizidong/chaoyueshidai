@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,6 +56,20 @@ public class NoteController {
 			});
 		}
 		return info;
+	}
+
+	// 我的笔记列表
+	@RequestMapping("/dyh/{type}/{page}/{openid}")
+	public String mine(@PathVariable String openid, @PathVariable String type, @PathVariable Integer page, Model model,
+			HttpSession session) {
+		log.debug("参数：openid=" + openid + ",type=" + type + ",page=" + page);
+		User user = (User) session.getAttribute("user");
+		PageParam param = new PageParam();
+		param.setPage(page);
+		param.setPageSize(20);
+		PageInfo<Note> info = noteService.find(user.getId(), type, param);
+		model.addAttribute("data", info);
+		return "note/list";
 	}
 
 	// 根据id获取

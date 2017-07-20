@@ -11,7 +11,7 @@
 			</div>
 			<div class="modal-body">
 				<form action="/rest/user/register" method="post">
-					<input name="openid" id="openid" style="visibility: hidden;" value="${requestScope.openid}">
+					<input name="openid" class="visibility-hidden" value="${requestScope.openid}">
 					<div class="form-group" id="tel">
 						<label for="tel">电话：</label>
 						<input type="text" name="tel" pattern="^\d{11}$" class="form-control" placeholder="请输入电话...">
@@ -50,10 +50,10 @@
 			data.pwd = $.md5(data.pwd);
 			ajax($('#registerModal form').attr('action'), data, function(data) {
 				$('#registerModal').modal('hide');
-				sucessMsg(data.msg);
+				_alert(data.msg,'success');
 			}, function(e) {
 				$('#registerModal').modal('hide');
-				errorMsg(e.msg || '服务器异常！请稍后重试...');
+				_alert(e.msg || '服务器异常！请稍后重试...','danger');
 			});
 		}
 		return false;

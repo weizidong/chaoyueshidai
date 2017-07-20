@@ -3,6 +3,7 @@
 <html lang="zh-CN">
 <%@include file="../common/head.jsp"%>
 <body>
+	<%@include file="../common/header.jsp"%>
 	<div class="page container-fluid">
 		<%@include file="../common/alert.jsp"%>
 		<div class="page-header">
