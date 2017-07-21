@@ -42,7 +42,7 @@ public class NoteController {
 			userid = user.getId();
 		}
 		PageInfo<Note> info = noteService.find(userid, type, param);
-		if (info.getList().size() > 0) {
+		if (info.getList().size() > 0 && userid < 1) {
 			List<User> userList = userService
 					.findList(info.getList().stream().map(Note::getUserid).collect(Collectors.toList()));
 			info.getList().forEach((n) -> {
@@ -66,12 +66,19 @@ public class NoteController {
 		User user = (User) session.getAttribute("user");
 		PageParam param = new PageParam();
 		param.setPage(page);
-		param.setPageSize(20);
+		param.setPageSize(5);
 		PageInfo<Note> info = noteService.find(user.getId(), type, param);
 		model.addAttribute("data", info);
+		model.addAttribute("type", type);
 		return "note/list";
 	}
-
+	// 根据id获取
+	@RequestMapping(value = "/dyh/{id}")
+	public String dyhGet(@PathVariable Integer id,Model model) {
+		Note note = noteService.get(id);
+		model.addAttribute("note", note);
+		return "note/info";
+	}
 	// 根据id获取
 	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
 	@ResponseBody

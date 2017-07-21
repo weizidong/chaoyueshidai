@@ -94,7 +94,6 @@
 			$('#submit').text('保存');
 			edit = true;
 		}
-		return false;
 	});
 	// 取消
 	$('#cancer').click(function() {

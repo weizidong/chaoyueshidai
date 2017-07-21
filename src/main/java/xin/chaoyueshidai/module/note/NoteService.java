@@ -36,7 +36,7 @@ public class NoteService {
 		if (StringUtils.equalsIgnoreCase(param.getFiled(), "title")) {
 			c.andTitleLike("%" + param.getKeyWord().toString() + "%");
 		}
-		e.setOrderByClause("id ASC");
+		e.setOrderByClause("created DESC");
 		PageInfo<Note> info = new PageInfo<Note>();
 		if (param.getPageSize() != null && param.getPageSize() > 0) {
 			int all = mapper.countByExample(e);

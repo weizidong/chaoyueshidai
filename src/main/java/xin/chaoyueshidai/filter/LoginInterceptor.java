@@ -42,7 +42,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 		// 获取请求的 URL
 		String url = request.getServletPath();
 		String query = request.getQueryString();
-		log.debug("请求：" + url + (query != null ? ("?" + query) : ""));
+		url = url + (query != null ? ("?" + query) : "");
+		log.debug("请求：" + url);
 		// 微信请求不校验
 		if (url.startsWith("/rest/wechat/")) {
 			return flag;

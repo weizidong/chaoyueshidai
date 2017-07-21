@@ -36,9 +36,9 @@ public class ExceptionHandler extends SimpleMappingExceptionResolver {
 		if (ex instanceof WebException) {
 			e = (WebException) ex;
 		} else {
-			e = WebException.error(ex.getMessage());
+			e = WebException.error("sorry，出错了。。。");
 		}
-		log.error("异常：" + e.getMsg());
+		log.error("异常：" + ex.getMessage());
 		ex.printStackTrace();
 		if (modelAndView == null) {
 			modelAndView = new ModelAndView("common/500");
