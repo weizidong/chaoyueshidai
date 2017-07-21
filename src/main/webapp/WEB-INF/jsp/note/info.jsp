@@ -14,57 +14,34 @@
 				<img src="${sessionScope.user.avatarUrl}" class="img-thumbnail img-circle" style="width: 32px;height: 32px">
 				<span>${sessionScope.user.name}</span>
 				<div class="btn-group pull-right">
-				  <button type="button" class="btn btn-info">编辑</button>
+				  <button type="button" id="editBtn" class="btn btn-info">编辑</button>
+				  <button type="button" id="saveBtn" class="btn btn-warning hidden">保存</button>
+				  <button type="button" id="shareBtn" class="btn btn-primary">${requestScope.note.share == 1?'取消分享':'分享' }</button>
 				</div>
 			</div>
 			<div class="panel-body">
 				<style type="text/css">
-					.control-label{
-						line-height: 34px;
-						margin-bottom: 0;
-					}
-					.form-horizontal .col-xs-9 div{display:inline-block;}
-					.form-horizontal .col-xs-9 input,.form-horizontal .col-xs-9 label{display:none;}
-					.update .col-xs-9 input,.update .col-xs-9 label{display:inline-block;}
-					.update .col-xs-9 div{display:none;}
+					.title{font-size:24px;}
+					.time{font-size:12px;color:#898989;box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 1px rgba(0,0,0,.075);}
 				</style>
-				<form class="form-horizontal" method="post" id="noteInfo">
+				<form method="post" id="noteInfo">
 					<input name="id" class="visibility-hidden" value="${requestScope.note.id}">
-					<div class="form-group" id="title">
-						<label class="col-xs-3 control-label" for="title">标题：</label>
-						<div class="col-xs-9">
-							<div class="form-control">${requestScope.note.title}</div>
-							<input type="text" name="title" value="${requestScope.note.title}" class="form-control" placeholder="请输入标题...">
-						</div>
+					<input id="share" name="share" class="visibility-hidden" value="${requestScope.note.share}">
+					<div class="text-center title" id="title">
+						<div>${requestScope.note.title}</div>
+						<input class="form-control text-center hidden" value="${requestScope.note.title}">
 					</div>
-					<div class="form-group" id="gender">
-						<label class="col-xs-3 control-label" for="gender">性别：</label>
-						<div class="col-xs-9">
-							<div class="form-control">${sessionScope.user.gender == 1?'男':'女'}</div>
-							<label class="radio-inline">
-							  <input type="radio" name="gender" value="1" ${sessionScope.user.gender == 1?'checked':''}>男
-							</label>
-							<label class="radio-inline">
-							  <input type="radio" name="gender" value="2" ${sessionScope.user.gender == 2?'checked':''}>女
-							</label>
-						</div>
+					<div class="form-group text-right time" id="created">
+						<div><fmt:formatDate value="${requestScope.note.created }" pattern="yyyy-MM-dd HH:mm"/></div>
+						<div class="hidden"><fmt:formatDate value="${requestScope.note.created }" pattern="yyyy-MM-dd HH:mm"/></div>
 					</div>
-					<div class="form-group" id="province">
-						<label class="col-xs-3 control-label" for="province">籍贯：</label>
-						<div class="col-xs-9">
-							<div class="form-control" style="width: 49%;">${sessionScope.user.province}</div>
-							<div class="form-control" style="width: 49%;">${sessionScope.user.city}</div>
-							<input type="text" style="width: 49%;" name="province" pattern="^\d{11}$" value="${sessionScope.user.province}" class="form-control" placeholder="省">
-							<input type="text" style="width: 49%;" name="city" pattern="^\d{11}$" value="${sessionScope.user.city}" class="form-control" placeholder="市">
-						</div>
+					<div class="form-group text-center" id="pic">
+						<img src="${fn:contains(requestScope.note.pic,'/userfiles/')?requestScope.note.pic:'/static/img/none.png'}" class="img-thumbnail">
+						<img src="${fn:contains(requestScope.note.pic,'/userfiles/')?requestScope.note.pic:'/static/img/none.png'}" class="img-thumbnail hidden">
 					</div>
-					<div class="form-group" id="tel">
-						<label class="col-xs-3 control-label" for="tel">电话：</label>
-						<div class="col-xs-9">
-							<div class="form-control">${sessionScope.user.tel}</div>
-							<input type="text" name="tel" pattern="^\d{11}$" value="${sessionScope.user.tel}" class="form-control" placeholder="请输入电话...">
-							<span class="help-block">电话号码为11为数字！</span>
-						</div>
+					<div class="form-group" id="content">
+						<div class="well">${requestScope.note.content }</div>
+						<textarea name="content" class="form-control hidden" rows="3" value="${requestScope.note.content }"></textarea>
 					</div>
 				</form>
 			</div>
@@ -75,6 +52,33 @@
 	<%@include file="../common/user.jsp"%>
 </body>
 <script type="text/javascript">
-	setTitle(${requestScope.note.title});
+	setTitle('${requestScope.note.title}');
+	function saveNote() {
+		var data = serialize('#noteInfo');
+		ajax('/rest/note/update', data, function(data) {
+			window.location.reload(true);
+		}, function(e) {
+			_alert(e.msg || '服务器异常！请稍后重试...','danger');
+		});
+	}
+	// 分享
+	$('#shareBtn').click(function() {
+		$('#share').val(${requestScope.note.share == 1?0:1 });
+		saveNote();
+	});
+	// 编辑
+	$('#editBtn').click(function() {
+		$('#saveBtn').removeClass('hidden');
+		$(this).addClass('hidden');
+		$('#noteInfo>div>:nth-child(2)').removeClass('hidden');
+		$('#noteInfo>div>:first-child').addClass('hidden');
+	});
+	// 保存
+	$('#saveBtn').click(function() {
+		$('#editBtn').removeClass('hidden');
+		$(this).addClass('hidden');
+		$('#noteInfo>div>:nth-child(2)').addClass('hidden');
+		$('#noteInfo>div>:first-child').removeClass('hidden');
+	});
 </script>
 </html>

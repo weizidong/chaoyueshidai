@@ -24,7 +24,6 @@
 					<c:forEach items="${requestScope.data.list}" var="item">
 					<a href="/rest/note/dyh/${item.id}" class="list-group-item my-data ${fn:length(requestScope.data.list)==1?'one':''}">
 						<div class="point"></div>
-						${request }
 						<img src="${fn:contains(item.pic,'/userfiles/')?item.pic:'/static/img/none.png'}" class="img-thumbnail" style="width: 48px;height: 48px">
 						<div>${item.title }</div>
 						<div><fmt:formatDate value="${item.created }" pattern="yyyy-MM-dd HH:mm"/></div>
