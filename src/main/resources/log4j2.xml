@@ -5,19 +5,19 @@
 			<ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" />
 			<PatternLayout pattern="[%-5p] %d{HH:mm:ss.SSS} [%t] (%F:%L) - %msg%n" />
 		</Console>
-		<RollingRandomAccessFile name="log" fileName="logs/debug.log"
+<!-- 		<RollingRandomAccessFile name="log" fileName="logs/debug.log"
 			filePattern="logs/debug/$${date:yyyy-MM-dd}/%d{yyyy-MM-dd HH}-%i.log">
 			<Filters>  
                 <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" />  
             </Filters> 
 			<PatternLayout pattern="[%-5p] %d{HH:mm:ss.SSS} [%t] (%F:%L) - %msg%n" />
 			<Policies>
-				<!--<TimeBasedTriggeringPolicy modulate="true" interval="24"/> -->
+				<TimeBasedTriggeringPolicy modulate="true" interval="24"/>
 				<TimeBasedTriggeringPolicy interval="1"/>
 				<SizeBasedTriggeringPolicy size="10 MB" />
 			</Policies>
 			<DefaultRolloverStrategy max="720" />
-		</RollingRandomAccessFile>
+		</RollingRandomAccessFile> -->
 		<RollingRandomAccessFile name="err" fileName="logs/error.log"
 			filePattern="logs/error/%d{yyyy-MM-dd}-%i.log">
 			<Filters>  
@@ -29,7 +29,7 @@
 				<TimeBasedTriggeringPolicy interval="1"/>
 				<SizeBasedTriggeringPolicy size="10 MB" />
 			</Policies>
-			<DefaultRolloverStrategy max="30" />
+			<DefaultRolloverStrategy max="3" />
 		</RollingRandomAccessFile>
 	</Appenders>
 	<Loggers>
@@ -38,7 +38,7 @@
 		<logger name="org.apache" level="warn"></logger>
 		<Root level="all">
 			<AppenderRef ref="Console" />
-			<AppenderRef ref="log" />
+		<!-- 	<AppenderRef ref="log" /> -->
 			<AppenderRef ref="err" />
 		</Root>
 	</Loggers>
