@@ -2,8 +2,6 @@ package xin.chaoyueshidai.filter;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,9 +42,7 @@ public class ExceptionHandler extends SimpleMappingExceptionResolver {
 		ex.printStackTrace();
 		if (modelAndView == null) {
 			modelAndView = new ModelAndView("common/500");
-			Map<String, Object> map = new HashMap<>();
-			map.put("msg", e.getMsg());
-			modelAndView.addObject(map);
+			modelAndView.addObject("msg", e.getMsg());
 		}
 		return modelAndView;
 	}

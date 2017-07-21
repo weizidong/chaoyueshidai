@@ -4,10 +4,12 @@
 <%@include file="./head.jsp"%>
 <body>
 	<%@include file="./header.jsp"%>
-	<div class="page container-fluid">
-		<div class="alert alert-danger" role="alert">404页面不见了。。。</div>
+	<style type="text/css">
+		.page>img{position:absolute;top:50%;left:50%;transform: translate(-50%,-50%)}
+	</style>
+	<div class="page">
+		<img src="/static/img/404.png">
 	</div>
-	<%@include file="./footer.jsp"%>
 </body>
 <script type="text/javascript">
 	setTitle('页面不见了');

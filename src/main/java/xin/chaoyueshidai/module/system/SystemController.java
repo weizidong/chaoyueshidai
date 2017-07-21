@@ -20,4 +20,17 @@ public class SystemController {
 		return "system/info";
 	}
 
+	// 获取操作说明
+	@RequestMapping("/404")
+	public String error404(Model model) {
+		return "common/404";
+	}
+
+	// 获取操作说明
+	@RequestMapping("/500")
+	public String error500(Model model) {
+		model.addAttribute("msg", "错误消息！500...");
+		return "common/500";
+	}
+
 }
