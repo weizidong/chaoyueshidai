@@ -11,7 +11,7 @@
 		<%@include file="../common/alert.jsp"%>
 		<div class="panel panel-default">
 			<div class="panel-heading" style="padding:10px;">
-				<img src="${sessionScope.user.avatarUrl}" class="img-thumbnail img-circle" style="width: 32px;height: 32px">
+				<img src="${fn:contains(sessionScope.user.avatarUrl,'/userfiles/')?sessionScope.user.avatarUrl:'/static/img/admin.png'}" class="img-thumbnail img-circle" style="width: 32px;height: 32px">
 				<span>${sessionScope.user.name}</span>
 				<div class="btn-group pull-right">
 				  <button type="button" id="editBtn" class="btn btn-info">编辑</button>

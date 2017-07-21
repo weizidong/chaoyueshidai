@@ -11,7 +11,7 @@
 		<%@include file="../common/alert.jsp"%>
 		<div class="panel panel-default">
 			<div class="panel-heading" style="padding:10px;">
-				<img src="${sessionScope.user.avatarUrl}" class="img-thumbnail img-circle" style="width: 32px;height: 32px">
+				<img src="${fn:contains(sessionScope.user.avatarUrl,'/userfiles/')?sessionScope.user.avatarUrl:'/static/img/admin.png'}" class="img-thumbnail img-circle" style="width: 32px;height: 32px">
 				<span>${sessionScope.user.name}</span>
 				<div class="btn-group pull-right">
 				  <a href="/rest/note/dyh/1/1/${sessionScope.user.openid}" class="btn btn-${requestScope.type==1?'info':'default'}">旅行日志</a>

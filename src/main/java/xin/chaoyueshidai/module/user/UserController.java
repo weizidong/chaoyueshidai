@@ -29,6 +29,11 @@ public class UserController {
 	@RequestMapping("/mine/{openid}")
 	public String mine(@PathVariable String openid, HttpSession session) {
 		log.debug("订阅号openId：" + openid);
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			user = userService.getByOpenId(openid);
+		}
+		session.setAttribute("user", user);
 		return "user/update";
 	}
 

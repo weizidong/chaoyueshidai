@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <%@include file="../common/head.jsp"%>
@@ -7,7 +8,7 @@
 	<div class="page container-fluid">
 		<%@include file="../common/alert.jsp"%>
 		<div class="page-header text-center">
-			<img src="${sessionScope.user.avatarUrl }" class="img-thumbnail img-circle" style="width: 150px;height: 150px">
+			<img src="${fn:contains(sessionScope.user.avatarUrl,'/userfiles/')?sessionScope.user.avatarUrl:'/static/img/admin.png'}" class="img-thumbnail img-circle" style="width: 150px;height: 150px">
 		</div>
 		<style type="text/css">
 			.control-label{
