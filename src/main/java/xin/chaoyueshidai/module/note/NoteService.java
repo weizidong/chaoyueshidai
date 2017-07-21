@@ -43,7 +43,7 @@ public class NoteService {
 			info.setPageSize(param.getPageSize());
 			info.setPage(param.getPage());
 			info.setAll(all);
-			e.setOrderByClause("id ASC limit " + info.getStart() + "," + info.getEnd());
+			e.setOrderByClause("created DESC limit " + info.getStart() + "," + info.getEnd());
 		}
 		List<Note> list = mapper.selectByExample(e);
 		info.setList(list);
