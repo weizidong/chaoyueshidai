@@ -8,7 +8,7 @@
 	<div class="page container-fluid">
 		<%@include file="../common/alert.jsp"%>
 		<div class="page-header text-center">
-			<img src="${fn:contains(sessionScope.user.avatarUrl,'/userfiles/')?sessionScope.user.avatarUrl:'/static/img/admin.png'}" class="img-thumbnail img-circle" style="width: 150px;height: 150px">
+			<img src="${sessionScope.user.avatarUrl!=null?sessionScope.user.avatarUrl:'/static/img/admin.png'}" class="img-thumbnail img-circle" style="width: 150px;height: 150px">
 		</div>
 		<style type="text/css">
 			.control-label{
